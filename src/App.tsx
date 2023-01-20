@@ -1,34 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+/*
+ * @Author: liu7i
+ * @Date: 2023-01-20 16:00:33
+ * @Last Modified by: liu7i
+ * @Last Modified time: 2023-01-20 17:11:51
+ */
+import Calendar from "components/Calendar";
+import ToolBar from "components/Calendar/components/ToolBar";
+import dayjs from "dayjs";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Calendar>
+        {(ref) => {
+          return (
+            <div>
+              {dayjs(ref.date).format("YYYY-MM-DD")}
+              <ToolBar cRef={ref} />
+              <div>当前展示的视图为：{ref.view.title}视图</div>
+            </div>
+          );
+        }}
+      </Calendar>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
