@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-01-20 17:03:11
+ * @Last Modified time: 2023-02-08 11:29:08
  */
 
 import React from "react";
@@ -50,3 +50,4 @@ const Calendar = function Calendar_(props: ICalendarProps) {
 export default Calendar;
 
 export * from "./interface";
+export * from "./components/index.css";

@@ -2,22 +2,29 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:27:47
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-01-20 17:23:55
+ * @Last Modified time: 2023-02-08 11:50:07
  */
 
 import React from "react";
 import type { ICalendarApi } from "components/Calendar";
 import dayjs from "dayjs";
 import { cnWeekDay } from "components/Calendar/utils";
-import "./index.css";
+import {
+  toolBar,
+  toolBarLeft,
+  toolBarLeftBtn,
+  toolBarLeftTitle,
+  toolBarCenter,
+  toolBarCenterBtn,
+} from "./index.css";
 
 const ToolBar = function ToolBar_(props: { cRef: ICalendarApi }) {
   const { cRef } = props;
   return (
-    <div className="calendar-toolbar">
-      <div className="calendar-toolbar-left">
-        <i className="iconfont icon-mjiantou-copy1 calendar-toolbar-left-change-date-btn" />
-        <span className="calendar-toolbar-left-title">
+    <div className={toolBar}>
+      <div className={toolBarLeft}>
+        <i className={`iconfont icon-mjiantou-copy1 ${toolBarLeftBtn}`} />
+        <span className={toolBarLeftTitle}>
           {dayjs(cRef.date).format("YYYY年 MM月DD日")}（
           {
             cnWeekDay[
@@ -26,13 +33,13 @@ const ToolBar = function ToolBar_(props: { cRef: ICalendarApi }) {
           }
           ）
         </span>
-        <i className="iconfont icon-mjiantou-copy calendar-toolbar-left-change-date-btn" />
+        <i className={`iconfont icon-mjiantou-copy ${toolBarLeftBtn}`} />
       </div>
-      <div className="calendar-toolbar-center">
+      <div className={toolBarCenter}>
         {cRef.views.map((v) => (
           <div
             key={v.title}
-            className={`calendar-toolbar-center-btn ${
+            className={`${toolBarCenterBtn} ${
               cRef.view.title === v.title ? "active" : ""
             }`}
             onClick={() => {
