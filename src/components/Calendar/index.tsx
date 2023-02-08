@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-08 11:29:08
+ * @Last Modified time: 2023-02-08 14:24:15
  */
 
 import React from "react";
@@ -25,7 +25,7 @@ const Calendar = function Calendar_(props: ICalendarProps) {
   });
 
   useMount(() => {
-    console.log("挂载时：", props);
+    console.log("挂载时Props：", props);
   }, []);
 
   const changeView = React.useCallback((v: IView) => {

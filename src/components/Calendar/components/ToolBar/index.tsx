@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:27:47
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-08 11:50:07
+ * @Last Modified time: 2023-02-08 15:02:50
  */
 
 import React from "react";
@@ -16,9 +16,19 @@ import {
   toolBarLeftTitle,
   toolBarCenter,
   toolBarCenterBtn,
+  toolBarRight,
+  toolBarRightBtnLeft,
+  toolBarRightBtnRight,
 } from "./index.css";
+import { EView } from "../../interface";
 
-const ToolBar = function ToolBar_(props: { cRef: ICalendarApi }) {
+export interface IToolBarProps {
+  cRef: ICalendarApi;
+  /** @function 工具栏右边可拓展部分*/
+  rightExtra?: React.ReactNode;
+}
+
+const ToolBar = function ToolBar_(props: IToolBarProps) {
   const { cRef } = props;
   return (
     <div className={toolBar}>
@@ -50,7 +60,17 @@ const ToolBar = function ToolBar_(props: { cRef: ICalendarApi }) {
           </div>
         ))}
       </div>
-      <div>right</div>
+      <div className={toolBarRight}>
+        {props.rightExtra}
+        {cRef.view.type === EView.DAY && (
+          <>
+            <i
+              className={`iconfont icon-zuixiaohua-copy ${toolBarRightBtnLeft}`}
+            />
+            <i className={`iconfont icon-plus ${toolBarRightBtnRight}`} />
+          </>
+        )}
+      </div>
     </div>
   );
 };
