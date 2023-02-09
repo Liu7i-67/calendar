@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:27:47
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-08 15:02:50
+ * @Last Modified time: 2023-02-09 11:35:26
  */
 
 import React from "react";
@@ -28,12 +28,17 @@ export interface IToolBarProps {
   rightExtra?: React.ReactNode;
 }
 
-const ToolBar = function ToolBar_(props: IToolBarProps) {
+export const ToolBar = function ToolBar_(props: IToolBarProps) {
   const { cRef } = props;
   return (
     <div className={toolBar}>
       <div className={toolBarLeft}>
-        <i className={`iconfont icon-mjiantou-copy1 ${toolBarLeftBtn}`} />
+        <i
+          className={`iconfont icon-mjiantou-copy1 ${toolBarLeftBtn}`}
+          onClick={() => {
+            cRef.backDate();
+          }}
+        />
         <span className={toolBarLeftTitle}>
           {dayjs(cRef.date).format("YYYY年 MM月DD日")}（
           {
@@ -43,7 +48,12 @@ const ToolBar = function ToolBar_(props: IToolBarProps) {
           }
           ）
         </span>
-        <i className={`iconfont icon-mjiantou-copy ${toolBarLeftBtn}`} />
+        <i
+          className={`iconfont icon-mjiantou-copy ${toolBarLeftBtn}`}
+          onClick={() => {
+            cRef.nextDate();
+          }}
+        />
       </div>
       <div className={toolBarCenter}>
         {cRef.views.map((v) => (
@@ -74,5 +84,3 @@ const ToolBar = function ToolBar_(props: IToolBarProps) {
     </div>
   );
 };
-
-export default ToolBar;

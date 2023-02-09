@@ -14,7 +14,7 @@ export interface IButtonProps
   children?: React.ReactNode;
 }
 
-const Button = function Button_(props: IButtonProps) {
+export const Button = function Button_(props: IButtonProps) {
   const { label, children, type, className, ...arg } = props;
   return (
     <button
@@ -26,5 +26,3 @@ const Button = function Button_(props: IButtonProps) {
     </button>
   );
 };
-
-export default Button;

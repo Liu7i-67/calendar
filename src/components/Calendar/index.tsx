@@ -2,52 +2,42 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-08 14:24:15
+ * @Last Modified time: 2023-02-09 11:34:31
  */
 
 import React from "react";
-import type { ICalendarProps, IStore, IView } from "./interface";
-import { EView } from "./interface";
-import { useMount } from "hooks/useMount";
+import type { ICalendarProps } from "./interface";
+import { RootStore } from "./store";
 
-const initViews: IView[] = [
-  { type: EView.DAY, title: "日" },
-  { type: EView.WEEK, title: "周" },
-  { type: EView.MONTH, title: "月" },
-  { type: EView.YEAR, title: "年" },
-];
-
-const Calendar = function Calendar_(props: ICalendarProps) {
-  const [store, setStore] = React.useState<IStore>({
-    date: props.defaultDate || new Date(),
-    views: props.views || initViews,
-    view: props.defaultView || (props.views || initViews)[0],
-  });
-
-  useMount(() => {
-    console.log("挂载时Props：", props);
-  }, []);
-
-  const changeView = React.useCallback((v: IView) => {
-    setStore((o) => ({
-      ...o,
-      view: v,
-    }));
-  }, []);
+const Calendar = function Calendar_() {
+  const data = RootStore.useSelector((root) => root.data);
+  const methods = RootStore.useSelector((root) => root.methods);
+  const props = RootStore.useSelector((root) => root.props);
 
   return (
     <div>
       {props.children({
-        date: store.date,
-        views: store.views,
-        view: store.view,
-        changeView,
+        date: data.date,
+        views: data.views,
+        view: data.view,
+        changeView: methods.changeView,
+        backDate: methods.backDate,
+        nextDate: methods.nextDate,
       })}
     </div>
   );
 };
 
-export default Calendar;
+export default function Calendar_(props: ICalendarProps) {
+  return (
+    <RootStore.Provider {...props}>
+      <Calendar />
+    </RootStore.Provider>
+  );
+}
 
 export * from "./interface";
 export * from "./components/index.css";
+export * from "./components/Button";
+export * from "./components/ErrorBoundary";
+export * from "./components/ToolBar";

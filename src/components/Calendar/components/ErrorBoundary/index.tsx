@@ -12,7 +12,10 @@ interface IObj {
   [key: string]: any;
 }
 
-class ErrorBoundary extends React.Component<IObj, { hasError: boolean }> {
+export class ErrorBoundary extends React.Component<
+  IObj,
+  { hasError: boolean }
+> {
   constructor(props: IObj) {
     super(props);
     this.state = {
@@ -32,5 +35,3 @@ class ErrorBoundary extends React.Component<IObj, { hasError: boolean }> {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

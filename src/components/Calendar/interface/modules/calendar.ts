@@ -16,4 +16,14 @@ export interface ICalendarApi {
   view: IView;
   /** @function 改变当前激活的视图 */
   changeView: (v: IView) => void;
+  /**
+   * @function 向前跳转时间
+   * @params newDate 日历新的日期
+   */
+  backDate: (newDate?: Date) => void;
+  /**
+   * @function 向后跳转时间
+   * @params newDate 日历新的日期
+   */
+  nextDate: (newDate?: Date) => void;
 }

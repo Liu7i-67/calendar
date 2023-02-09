@@ -4,10 +4,12 @@
  * @Last Modified by: liu7i
  * @Last Modified time: 2023-02-08 14:44:46
  */
-import Calendar, { themeClass } from "components/Calendar";
-import ErrorBoundary from "components/Calendar/components/ErrorBoundary";
-import Button from "components/Calendar/components/Button";
-import ToolBar from "components/Calendar/components/ToolBar";
+import Calendar, {
+  themeClass,
+  ErrorBoundary,
+  Button,
+  ToolBar,
+} from "components/Calendar";
 import dayjs from "dayjs";
 import "./App.css";
 
