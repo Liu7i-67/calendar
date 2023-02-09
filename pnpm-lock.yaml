@@ -11,18 +11,20 @@ specifiers:
   '@vanilla-extract/vite-plugin': ^3.8.0
   '@vitejs/plugin-react-swc': ^3.0.0
   dayjs: ^1.11.7
+  immer: ^9.0.19
   react: ^18.2.0
   react-dom: ^18.2.0
   typescript: ^4.9.3
   vite: ^4.0.0
 
 dependencies:
-  '@quarkunlimit/immer': 1.0.0_biqbaboplfbrettd7655fr4n2y
+  '@quarkunlimit/immer': 1.0.0_ytuas6axp6gvse4ghxb2libdjm
   '@quarkunlimit/react-hooks': 2.0.3_biqbaboplfbrettd7655fr4n2y
   '@quarkunlimit/tiny': 1.0.0_biqbaboplfbrettd7655fr4n2y
   '@types/node': 18.11.18
   '@vanilla-extract/css': 1.9.5
   dayjs: 1.11.7
+  immer: 9.0.19
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
 
@@ -498,13 +500,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@quarkunlimit/immer/1.0.0_biqbaboplfbrettd7655fr4n2y:
+  /@quarkunlimit/immer/1.0.0_ytuas6axp6gvse4ghxb2libdjm:
     resolution: {integrity: sha512-9RG9jMh7M244dr4hi+jGSUasGB/vMzeR2KR1JsNCy04PqPVCu3rxFoV23IFA3nfYeWYE3mYPwA898/MhNhHK9g==}
     peerDependencies:
       immer: ^9.0.15
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
+      immer: 9.0.19
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
@@ -940,6 +943,10 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /immer/9.0.19:
+    resolution: {integrity: sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==}
+    dev: false
 
   /is-core-module/2.11.0:
     resolution: {integrity: sha512-RRjxlvLDkD1YJwDbroBHMb+cukurkDWNyHx7D3oNB5x9rb5ogcksMC5wHCadcXoo67gVr/+3GFySh3134zi6rw==}

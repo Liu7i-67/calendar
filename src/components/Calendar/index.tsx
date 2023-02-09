@@ -2,21 +2,24 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-09 11:34:31
+ * @Last Modified time: 2023-02-09 11:47:43
  */
 
 import React from "react";
-import type { ICalendarProps } from "./interface";
+import type { ICalendarProps, ICalendarApi } from "./interface";
 import { RootStore } from "./store";
 
-const Calendar = function Calendar_() {
+const Calendar = function Calendar_({
+  children,
+}: {
+  children: (ref: ICalendarApi) => React.ReactNode;
+}) {
   const data = RootStore.useSelector((root) => root.data);
   const methods = RootStore.useSelector((root) => root.methods);
-  const props = RootStore.useSelector((root) => root.props);
 
   return (
     <div>
-      {props.children({
+      {children?.({
         date: data.date,
         views: data.views,
         view: data.view,
@@ -31,7 +34,7 @@ const Calendar = function Calendar_() {
 export default function Calendar_(props: ICalendarProps) {
   return (
     <RootStore.Provider {...props}>
-      <Calendar />
+      <Calendar children={props.children} />
     </RootStore.Provider>
   );
 }
