@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:27:47
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-09 11:35:26
+ * @Last Modified time: 2023-02-10 10:53:16
  */
 
 import React from "react";
@@ -19,17 +19,36 @@ import {
   toolBarRight,
   toolBarRightBtnLeft,
   toolBarRightBtnRight,
+  toolBarBackTodayBtn,
 } from "./index.css";
 import { EView } from "../../interface";
+import {
+  getNowTitle,
+  backToNowInfo,
+  classNames,
+} from "components/Calendar/utils";
 
 export interface IToolBarProps {
   cRef: ICalendarApi;
   /** @function 工具栏右边可拓展部分*/
   rightExtra?: React.ReactNode;
+  /** @function 其它模式的标题渲染 */
+  otherTitle?: () => string;
+  /** @function 其它模式控制返回现在按钮是否显示已经其文本 */
+  otherInfo?: () => { title: string; show: boolean; newDate?: Date };
 }
 
 export const ToolBar = function ToolBar_(props: IToolBarProps) {
   const { cRef } = props;
+
+  const title = React.useMemo(() => {
+    return getNowTitle(cRef.date, cRef.view, props.otherTitle);
+  }, [cRef.date, cRef.view, props.otherTitle]);
+
+  const backInfo = React.useMemo(() => {
+    return backToNowInfo(cRef.date, cRef.view, props.otherInfo);
+  }, [cRef.date, cRef.view, props.otherInfo]);
+
   return (
     <div className={toolBar}>
       <div className={toolBarLeft}>
@@ -39,21 +58,25 @@ export const ToolBar = function ToolBar_(props: IToolBarProps) {
             cRef.backDate();
           }}
         />
-        <span className={toolBarLeftTitle}>
-          {dayjs(cRef.date).format("YYYY年 MM月DD日")}（
-          {
-            cnWeekDay[
-              +dayjs(cRef.date).format("d") as 0 | 1 | 2 | 3 | 4 | 5 | 6
-            ]
-          }
-          ）
-        </span>
+        <span className={toolBarLeftTitle}>{title}</span>
         <i
           className={`iconfont icon-mjiantou-copy ${toolBarLeftBtn}`}
           onClick={() => {
             cRef.nextDate();
           }}
         />
+        <button
+          type="button"
+          className={classNames({
+            [toolBarBackTodayBtn]: true,
+            show: backInfo.show,
+          })}
+          onClick={() => {
+            cRef.backToNow();
+          }}
+        >
+          {backInfo.title}
+        </button>
       </div>
       <div className={toolBarCenter}>
         {cRef.views.map((v) => (

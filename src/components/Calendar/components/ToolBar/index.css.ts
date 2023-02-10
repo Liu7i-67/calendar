@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:30:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-08 15:06:10
+ * @Last Modified time: 2023-02-10 10:51:08
  */
 
 import { style } from "@vanilla-extract/css";
@@ -34,9 +34,27 @@ export const toolBarLeftBtn = style({
 });
 
 export const toolBarLeftTitle = style({
-  marginLeft: "8px",
+  margin: "0 8px",
   fontWeight: "bold",
   fontSize: "16px",
+});
+
+export const toolBarBackTodayBtn = style({
+  display: "none",
+  marginLeft: "16px",
+  padding: "4px 8px",
+  background: vars.writeColor,
+  color: vars.mainColor,
+  border: `1px solid ${vars.mainColor}`,
+  borderRadius: "16px",
+  selectors: {
+    ["&:focus"]: {
+      outline: "none",
+    },
+    ["&.show"]: {
+      display: "initial",
+    },
+  },
 });
 
 export const toolBarCenter = style({

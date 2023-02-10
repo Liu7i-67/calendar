@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-09 11:20:27
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-09 13:38:32
+ * @Last Modified time: 2023-02-10 10:12:57
  */
 import { useCallback, useMemo } from "react";
 import { useImmer } from "@quarkunlimit/immer";
@@ -109,6 +109,18 @@ export function useStore(props: ICalendarProps) {
       }
       setData((o) => {
         o.date = dayjs(oldDate).add(1, unit).toDate();
+      });
+    },
+    /** @function 回到现在 */
+    backToNow: (newDate?: Date) => {
+      if (newDate) {
+        setData((o) => {
+          o.date = newDate;
+        });
+        return;
+      }
+      setData((o) => {
+        o.date = new Date();
       });
     },
   });

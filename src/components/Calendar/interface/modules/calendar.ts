@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:52:56
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-01-20 17:02:24
+ * @Last Modified time: 2023-02-10 10:13:36
  */
 
 import type { IView } from "..";
@@ -18,12 +18,17 @@ export interface ICalendarApi {
   changeView: (v: IView) => void;
   /**
    * @function 向前跳转时间
-   * @params newDate 日历新的日期
+   * @params newDate 日历新的日期-用于自定义模式
    */
   backDate: (newDate?: Date) => void;
   /**
    * @function 向后跳转时间
-   * @params newDate 日历新的日期
+   * @params newDate 日历新的日期-用于自定义模式
    */
   nextDate: (newDate?: Date) => void;
+  /**
+   * @function 回到现在
+   * @params newDate 日历新的日期-用于自定义模式
+   */
+  backToNow: (newDate?: Date) => void;
 }

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-09 11:47:43
+ * @Last Modified time: 2023-02-10 10:13:43
  */
 
 import React from "react";
@@ -26,6 +26,7 @@ const Calendar = function Calendar_({
         changeView: methods.changeView,
         backDate: methods.backDate,
         nextDate: methods.nextDate,
+        backToNow: methods.backToNow,
       })}
     </div>
   );
