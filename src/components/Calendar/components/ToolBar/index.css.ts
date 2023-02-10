@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:30:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 10:51:08
+ * @Last Modified time: 2023-02-10 13:39:11
  */
 
 import { style } from "@vanilla-extract/css";
@@ -17,7 +17,7 @@ export const toolBar = style({
 export const toolBarLeft = style({
   display: "flex",
   alignItems: "center",
-  flex: 1,
+  flex: 2,
 });
 
 export const toolBarLeftBtn = style({
@@ -95,6 +95,11 @@ export const toolBarRight = style({
   alignItems: "center",
   justifyContent: "right",
   flex: 1,
+  "@media": {
+    "screen and (min-width: 1301px)": {
+      flex: 3,
+    },
+  },
 });
 
 export const toolBarRightBtnLeft = style({
@@ -134,4 +139,28 @@ export const toolBarRightBtnRight = style({
   borderBottomRightRadius: "50%",
   background: vars.dayAddBtnBgColor,
   color: vars.dayAddBtnColor,
+});
+
+export const toolBarRightContent = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  "@media": {
+    "screen and (max-width: 1300px)": {
+      display: "none",
+    },
+  },
+});
+
+export const toolBarRightMore = style({
+  selectors: {
+    ["&.hidden"]: {
+      display: "none",
+    },
+  },
+  "@media": {
+    "screen and (min-width: 1301px)": {
+      display: "none",
+    },
+  },
 });

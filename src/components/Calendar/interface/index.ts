@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:42
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-01-20 16:59:55
+ * @Last Modified time: 2023-02-10 11:32:16
  */
 import type { ICalendarApi } from "./modules/calendar";
 import type { EView } from "./modules/enum";
@@ -22,6 +22,12 @@ export interface ICalendarProps {
   views?: IView[];
   /** @param 默认初始展示的视图 */
   defaultView?: IView;
+}
+
+export interface IDropDownContent {
+  /** @param 唯一key */
+  key: string;
+  node: React.ReactNode;
 }
 
 export * from "./modules/calendar";

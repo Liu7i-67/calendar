@@ -2,13 +2,13 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:27:47
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 10:53:16
+ * @Last Modified time: 2023-02-10 11:52:38
  */
 
 import React from "react";
 import type { ICalendarApi } from "components/Calendar";
-import dayjs from "dayjs";
-import { cnWeekDay } from "components/Calendar/utils";
+import { Dropdown } from "components/Calendar/components/Dropdown";
+import { Button } from "components/Calendar/components/Button";
 import {
   toolBar,
   toolBarLeft,
@@ -20,8 +20,10 @@ import {
   toolBarRightBtnLeft,
   toolBarRightBtnRight,
   toolBarBackTodayBtn,
+  toolBarRightContent,
+  toolBarRightMore,
 } from "./index.css";
-import { EView } from "../../interface";
+import { EView, IDropDownContent } from "../../interface";
 import {
   getNowTitle,
   backToNowInfo,
@@ -31,7 +33,9 @@ import {
 export interface IToolBarProps {
   cRef: ICalendarApi;
   /** @function 工具栏右边可拓展部分*/
-  rightExtra?: React.ReactNode;
+  rightExtra?: IDropDownContent[];
+  /** @param 工具栏右边可拓展部分折叠后的按钮文案 */
+  rightExtraTitle?: string;
   /** @function 其它模式的标题渲染 */
   otherTitle?: () => string;
   /** @function 其它模式控制返回现在按钮是否显示已经其文本 */
@@ -94,7 +98,22 @@ export const ToolBar = function ToolBar_(props: IToolBarProps) {
         ))}
       </div>
       <div className={toolBarRight}>
-        {props.rightExtra}
+        <div className={toolBarRightContent}>
+          {props.rightExtra?.map((i) => (
+            <div key={i.key}> {i.node}</div>
+          ))}
+        </div>
+        <Dropdown content={props.rightExtra ?? []}>
+          <Button
+            className={classNames({
+              [toolBarRightMore]: true,
+              primary_btn: true,
+              hidden: !props.rightExtra?.length,
+            })}
+          >
+            {props.rightExtraTitle ?? "操作"}
+          </Button>
+        </Dropdown>
         {cRef.view.type === EView.DAY && (
           <>
             <i
