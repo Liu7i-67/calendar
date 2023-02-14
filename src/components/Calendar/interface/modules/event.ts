@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-13 18:09:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 11:11:14
+ * @Last Modified time: 2023-02-14 16:12:37
  */
 
 export interface IEvent {
@@ -38,6 +38,8 @@ export interface IEventCol {
   startTimeStr: string;
   /** @param 事件结束时间 YYYY-MM-DD HH:mm:ss */
   endTimeStr: string;
+  /** @param 是否为占位时间轴块 默认为false 否 */
+  isRangeBlock?: boolean;
 }
 
 export interface IColItem {

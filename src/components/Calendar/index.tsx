@@ -2,12 +2,13 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 14:34:45
+ * @Last Modified time: 2023-02-14 18:06:07
  */
 
 import React from "react";
 import type { ICalendarProps, ICalendarApi } from "./interface";
 import { RootStore } from "./store";
+import { useDayRenderData } from "./store/dayHook/useDayRenderData";
 
 const Calendar = function Calendar_({
   children,
@@ -17,6 +18,7 @@ const Calendar = function Calendar_({
   const data = RootStore.useSelector((root) => root.data);
   const methods = RootStore.useSelector((root) => root.methods);
   const computed = RootStore.useSelector((root) => root.computed);
+  const dayRender = useDayRenderData();
 
   return (
     <div>
@@ -24,12 +26,13 @@ const Calendar = function Calendar_({
         date: data.date,
         views: data.views,
         view: data.view,
-        dayRender: computed.dayRenderData,
+        dayRender: dayRender,
         colItems: computed.colItems,
         changeView: methods.changeView,
         backDate: methods.backDate,
         nextDate: methods.nextDate,
         backToNow: methods.backToNow,
+        dayBgOption: methods.dayBgOption,
       })}
     </div>
   );

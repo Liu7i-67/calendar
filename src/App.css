@@ -6,6 +6,10 @@
   padding: 50px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .mr-8 {
   margin-right: 8px;
 }

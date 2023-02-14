@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:53:58
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 14:46:31
+ * @Last Modified time: 2023-02-14 17:35:00
  */
 
 import React, { useEffect, useState } from "react";
@@ -14,9 +14,15 @@ import {
   TimeRowItem,
   DayRowItem,
   NowLine,
+  DayBoxStyle,
+  DayTitle,
+  TitleTimeRow,
+  TitleDayRow,
+  TimeRowItemTips,
 } from "./index.css";
 import dayjs from "dayjs";
-import { useMount } from "@/hooks/useMount";
+import { classNames } from "../../utils";
+import type { EOptionType } from "components/Calendar/interface";
 
 export interface IDayContentProps {
   cRef: ICalendarApi;
@@ -28,7 +34,6 @@ export interface IDayContentProps {
 
 export const DayContent = function DayContent_(props: IDayContentProps) {
   const { cRef, timeStar, timeEnd } = props;
-  console.log("cRef.dayRender:", cRef.dayRender);
   const [lineStyle, setLineStyle] = useState<React.CSSProperties>({ top: "0" });
   const timer = React.useRef<number>(0);
 
@@ -55,23 +60,65 @@ export const DayContent = function DayContent_(props: IDayContentProps) {
   }, [timeStar, timeEnd, cRef.date]);
 
   return (
-    <div className={Day}>
-      {/** 背景层 */}
-      <div className={TimeRow}>
-        {cRef.dayRender?.[0]?.range.map((i) => (
-          <div className={TimeRowItem} key={i.id}>
-            {dayjs(i.startTimeStr).format("H")}
+    <div className={DayBoxStyle}>
+      <div className={DayTitle}>
+        <div className={TitleTimeRow}></div>
+        {cRef.colItems.map((c) => (
+          <div className={TitleDayRow} key={c.id}>
+            {c.title}
           </div>
         ))}
       </div>
-      {cRef.dayRender?.[0]?.content.map((c) => (
-        <div className={DayRow} key={c[0].colId}>
-          {c.map((i) => (
-            <div className={DayRowItem} key={i.id}></div>
+      <div className={Day}>
+        {/** 背景层 */}
+        <div className={TimeRow}>
+          {cRef.dayRender?.[0]?.range.map((i) => (
+            <div
+              className={classNames({
+                [TimeRowItem]: true,
+                block: i.isRangeBlock,
+              })}
+              key={i.id}
+            >
+              {!i.isRangeBlock && (
+                <>
+                  {dayjs(i.startTimeStr).format("H")}
+                  <span className={TimeRowItemTips}>00</span>
+                </>
+              )}
+            </div>
           ))}
         </div>
-      ))}
-      <div className={NowLine} style={lineStyle}></div>
+        {cRef.dayRender?.[0]?.content.map((c) => (
+          <div className={DayRow} key={c[0].colId}>
+            {c.map((i) => (
+              <div
+                className={DayRowItem}
+                key={i.id}
+                onMouseDown={(e) => {
+                  cRef.dayBgOption(i, e);
+                }}
+                onMouseMove={(e) => {
+                  cRef.dayBgOption(i, e);
+                }}
+                onMouseUp={(e) => {
+                  cRef.dayBgOption(i, e);
+                }}
+                onTouchStart={(e) => {
+                  cRef.dayBgOption(i, e);
+                }}
+                onTouchMove={(e) => {
+                  cRef.dayBgOption(i, e);
+                }}
+                onTouchEnd={(e) => {
+                  cRef.dayBgOption(i, e);
+                }}
+              ></div>
+            ))}
+          </div>
+        ))}
+        <div className={NowLine} style={lineStyle}></div>
+      </div>
     </div>
   );
 };

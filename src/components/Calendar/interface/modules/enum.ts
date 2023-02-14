@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:12:16
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-01-20 16:13:38
+ * @Last Modified time: 2023-02-14 16:35:28
  */
 
 export enum EView {
@@ -16,4 +16,13 @@ export enum EView {
   YEAR = "YEAR",
   /** @param 自定义视图 */
   DIY = "DIY",
+}
+
+export enum EOptionType {
+  mousedown = "mousedown",
+  mouseup = "mouseup",
+  mousemove = "mousemove",
+  touchmove = "touchmove",
+  touchstart = "touchstart",
+  touchend = "touchend",
 }

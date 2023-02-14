@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:10:32
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 14:28:25
+ * @Last Modified time: 2023-02-14 17:32:49
  */
 
 import type { IView, IEvent, IColItem } from "../index";
@@ -31,4 +31,5 @@ export interface IStore extends IPropsInit {
   index: number;
   /** @param 当前每页展示的专家数 */
   pageSize: number;
+  /** @param 暂存用户的拖拽行为 */
 }

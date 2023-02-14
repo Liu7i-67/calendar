@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:27:11
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 11:53:06
+ * @Last Modified time: 2023-02-14 15:58:01
  */
 
 import { createTheme, style } from "@vanilla-extract/css";
@@ -28,6 +28,10 @@ export const [themeClass, vars] = createTheme({
   borderColor: "#CECECE",
   /** @param 当前时间颜色 */
   nowLineColor: "#F77B7D",
+  /** @param header专家背景色 */
+  colBgColor: "#EFF3FA",
+  /** @param 时间轴字体颜色 */
+  rangeColor: "#767676",
 
   /** @param 普通字号 */
   normalFontSize: "14px",

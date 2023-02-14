@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:00:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 13:42:22
+ * @Last Modified time: 2023-02-14 16:05:04
  */
 import Calendar, {
   themeClass,
@@ -11,6 +11,7 @@ import Calendar, {
   ToolBar,
   Dropdown,
   DayContent,
+  EView,
 } from "components/Calendar";
 import dayjs from "dayjs";
 import "./App.css";
@@ -53,6 +54,14 @@ const cols = [
     id: "2",
     title: "李四",
   },
+  {
+    id: "3",
+    title: "王五",
+  },
+  {
+    id: "4",
+    title: "赵二",
+  },
 ];
 
 function App() {
@@ -71,10 +80,9 @@ function App() {
               <div className={themeClass}>
                 {dayjs(ref.date).format("YYYY-MM-DD")}
                 <ToolBar cRef={ref} rightExtra={rightExtra} />
-                <div className="content">
+                {ref.view.type === EView.DAY && (
                   <DayContent cRef={ref} timeStar={8} timeEnd={22} />
-                </div>
-
+                )}
                 <div>当前展示的视图为：{ref.view.title}视图</div>
               </div>
             );

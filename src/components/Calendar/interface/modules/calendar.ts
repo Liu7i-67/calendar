@@ -2,10 +2,11 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:52:56
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 14:34:37
+ * @Last Modified time: 2023-02-14 17:35:22
  */
 
-import type { IView, TDayRender, IColItem } from "..";
+import React from "react";
+import type { IView, TDayRender, IColItem, IEventCol, EOptionType } from "..";
 
 export interface ICalendarApi {
   /** @param 日历当前时间 */
@@ -35,4 +36,9 @@ export interface ICalendarApi {
    * @params newDate 日历新的日期-用于自定义模式
    */
   backToNow: (newDate?: Date) => void;
+  /** @function 日模式背景相关操作 */
+  dayBgOption: (
+    c: IEventCol,
+    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+  ) => void;
 }

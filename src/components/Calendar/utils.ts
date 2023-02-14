@@ -2,13 +2,13 @@
  * @Author: liu7i
  * @Date: 2023-01-20 17:18:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 10:52:12
+ * @Last Modified time: 2023-02-14 16:16:45
  */
 
 import { EView, IView } from "./interface";
 import dayjs from "dayjs";
 
-export const classNames = (obj: { [key: string]: boolean }) => {
+export const classNames = (obj: { [key: string]: boolean | undefined }) => {
   let className = "";
   Object.keys(obj).forEach((i) => {
     // @ts-ignore

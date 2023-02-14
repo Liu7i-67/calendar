@@ -2,12 +2,13 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:42
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 10:08:26
+ * @Last Modified time: 2023-02-14 17:56:01
  */
 import type { ICalendarApi } from "./modules/calendar";
 import type { EView } from "./modules/enum";
-import type { IPropsInit } from "./modules/store";
+import type { IPropsInit, IStore } from "./modules/store";
 import type { IEvent, IColItem } from "./modules/event";
+import type { Draft, Immutable } from "immer";
 
 export interface IView {
   /** @param 类型 */
@@ -32,6 +33,18 @@ export interface IDropDownContent {
   /** @param 唯一key */
   key: string;
   node: React.ReactNode;
+}
+
+declare type Recipe<S = any> = (
+  this: Draft<S>,
+  draftState: Draft<S>
+) => void | S;
+export type TUpdate<S = any> = (recipe: Recipe<S>) => void;
+
+export interface ISubRootProps {
+  data: Immutable<IStore>;
+  setData: TUpdate<IStore>;
+  props: ICalendarProps;
 }
 
 export * from "./modules/calendar";
