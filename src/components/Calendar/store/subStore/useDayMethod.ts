@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 18:15:58
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 18:16:26
+ * @Last Modified time: 2023-02-14 18:35:57
  */
 
 import type { IEventCol } from "components/Calendar/interface";
@@ -23,6 +23,11 @@ export const useDayMethod = (props: ISubRootProps) => {
         case EOptionType.mousedown:
         case EOptionType.touchstart:
           {
+            setData((o) => {
+              // o.temDragData.push({
+              //   type:e.type as EOptionType,
+              // })
+            });
             console.log(c, e);
           }
           break;

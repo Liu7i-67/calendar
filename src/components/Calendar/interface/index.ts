@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:42
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 17:56:01
+ * @Last Modified time: 2023-02-14 18:23:05
  */
 import type { ICalendarApi } from "./modules/calendar";
 import type { EView } from "./modules/enum";
@@ -51,3 +51,4 @@ export * from "./modules/calendar";
 export * from "./modules/store";
 export * from "./modules/enum";
 export * from "./modules/event";
+export * from "./modules/drag";

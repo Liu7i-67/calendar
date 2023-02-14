@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-09 11:20:27
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 18:17:04
+ * @Last Modified time: 2023-02-14 18:27:02
  */
 import React, { useCallback, useMemo } from "react";
 import { useImmer } from "@quarkunlimit/immer";
@@ -38,6 +38,7 @@ const initStore: IStore = {
   maxColNum: 16,
   index: 1,
   pageSize: 7,
+  temDragData: [],
 };
 
 export function useStore(props: ICalendarProps) {
