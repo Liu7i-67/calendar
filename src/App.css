@@ -9,3 +9,8 @@
 .mr-8 {
   margin-right: 8px;
 }
+
+.content {
+  height: 650px;
+  overflow-y: auto;
+}

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 11:11:01
+ * @Last Modified time: 2023-02-14 14:34:45
  */
 
 import React from "react";
@@ -16,6 +16,7 @@ const Calendar = function Calendar_({
 }) {
   const data = RootStore.useSelector((root) => root.data);
   const methods = RootStore.useSelector((root) => root.methods);
+  const computed = RootStore.useSelector((root) => root.computed);
 
   return (
     <div>
@@ -23,6 +24,8 @@ const Calendar = function Calendar_({
         date: data.date,
         views: data.views,
         view: data.view,
+        dayRender: computed.dayRenderData,
+        colItems: computed.colItems,
         changeView: methods.changeView,
         backDate: methods.backDate,
         nextDate: methods.nextDate,
@@ -46,3 +49,4 @@ export * from "./components/Button";
 export * from "./components/ErrorBoundary";
 export * from "./components/ToolBar";
 export * from "./components/Dropdown";
+export * from "./components/DayContent";

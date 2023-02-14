@@ -2,10 +2,10 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:52:56
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 10:13:36
+ * @Last Modified time: 2023-02-14 14:34:37
  */
 
-import type { IView } from "..";
+import type { IView, TDayRender, IColItem } from "..";
 
 export interface ICalendarApi {
   /** @param 日历当前时间 */
@@ -14,6 +14,10 @@ export interface ICalendarApi {
   views: IView[];
   /** @param 当前展示的视图信息 */
   view: IView;
+  /** @param 日视图渲染相关数据 */
+  dayRender: TDayRender;
+  /** @param 当前展示的专家信息 */
+  colItems: IColItem[];
   /** @function 改变当前激活的视图 */
   changeView: (v: IView) => void;
   /**

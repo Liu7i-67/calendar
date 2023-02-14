@@ -2,10 +2,10 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:27:11
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-08 15:02:10
+ * @Last Modified time: 2023-02-14 11:53:06
  */
 
-import { createTheme } from "@vanilla-extract/css";
+import { createTheme, style } from "@vanilla-extract/css";
 
 export const [themeClass, vars] = createTheme({
   /** @param 主题色 */
@@ -22,7 +22,16 @@ export const [themeClass, vars] = createTheme({
   dayAddBtnColor: "#5997EA",
   /** @param 白色 */
   writeColor: "#ffffff",
+  /** @parma 无排班背景色 */
+  disabledBg: "#EFF4F8",
+  /** @param 边框色 */
+  borderColor: "#CECECE",
+  /** @param 当前时间颜色 */
+  nowLineColor: "#F77B7D",
 
   /** @param 普通字号 */
   normalFontSize: "14px",
+
+  /** @param 时间轴列的宽度 */
+  rangeLineWidth: "50px",
 });

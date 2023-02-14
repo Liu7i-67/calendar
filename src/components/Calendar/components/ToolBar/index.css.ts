@@ -2,13 +2,15 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:30:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 13:39:11
+ * @Last Modified time: 2023-02-14 11:30:13
  */
 
 import { style } from "@vanilla-extract/css";
 import { vars } from "../index.css";
 
 export const toolBar = style({
+  marginBottom: "18px",
+  padding: "0 38px 0 48px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -96,7 +98,7 @@ export const toolBarRight = style({
   justifyContent: "right",
   flex: 1,
   "@media": {
-    "screen and (min-width: 1301px)": {
+    "screen and (min-width: 1351px)": {
       flex: 3,
     },
   },
@@ -146,7 +148,7 @@ export const toolBarRightContent = style({
   alignItems: "center",
   justifyContent: "center",
   "@media": {
-    "screen and (max-width: 1300px)": {
+    "screen and (max-width: 1350px)": {
       display: "none",
     },
   },
@@ -159,7 +161,7 @@ export const toolBarRightMore = style({
     },
   },
   "@media": {
-    "screen and (min-width: 1301px)": {
+    "screen and (min-width: 1351px)": {
       display: "none",
     },
   },
