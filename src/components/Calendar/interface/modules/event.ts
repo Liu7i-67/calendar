@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-13 18:09:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 16:12:37
+ * @Last Modified time: 2023-02-15 15:12:08
  */
 
 export interface IEvent {
@@ -49,11 +49,18 @@ export interface IColItem {
   title: string;
 }
 
-export interface IDayLayer1 {
+export interface IDayLayerBg {
   /** @param 时间轴信息 */
   range: IEventCol[];
   /** @param 内容信息 */
   content: IEventCol[][];
 }
 
-export type TDayRender = [IDayLayer1];
+export interface IDayLayerDrag {
+  /** @param 时间轴信息 */
+  range: IEvent[];
+  /** @param 内容信息 */
+  content: IEvent[][];
+}
+
+export type TDayRender = [IDayLayerBg, IDayLayerDrag];

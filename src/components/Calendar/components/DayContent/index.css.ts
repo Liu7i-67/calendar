@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:54:08
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 16:15:46
+ * @Last Modified time: 2023-02-15 16:08:23
  */
 import { style } from "@vanilla-extract/css";
 import { vars } from "../index.css";
@@ -40,6 +40,10 @@ export const TitleDayRow = style({
 });
 
 export const Day = style({
+  position: "relative",
+});
+
+export const DayBg = style({
   position: "relative",
   display: "flex",
   paddingRight: "20px",
@@ -97,4 +101,35 @@ export const NowLine = style({
   left: vars.rangeLineWidth,
   background: vars.nowLineColor,
   pointerEvents: "none",
+});
+
+export const DragStyle = style({
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0,
+  zIndex: 100,
+  pointerEvents: "none",
+  display: "flex",
+  paddingRight: "20px",
+});
+
+export const DragTimeRowItem = style({
+  height: "42px",
+  background: `rgba(255, 243, 200,0.5)`,
+});
+
+export const DragDayRow = style({
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+});
+
+export const DragDayRowItem = style({
+  height: "42px",
+  textAlign: "center",
+  borderTop: `1px solid ${vars.borderColor}`,
+  borderRight: `1px solid ${vars.borderColor}`,
+  background: `rgba(253, 240, 255,0.5)`,
 });

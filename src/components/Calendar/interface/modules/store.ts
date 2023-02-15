@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:10:32
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 18:25:05
+ * @Last Modified time: 2023-02-15 13:55:06
  */
 
 import type { IView, IDragEvent } from "../index";
@@ -20,6 +20,8 @@ export interface IPropsInit {
   minColNum: number;
   /** @param 日模式最多同时展示的专家数量 最小为1 默认为16 */
   maxColNum: number;
+  /** @param 移动端touch灵敏度，单位毫秒 默认为300 */
+  touchInterval: number;
 }
 
 export interface IStore extends IPropsInit {
@@ -33,4 +35,8 @@ export interface IStore extends IPropsInit {
   pageSize: number;
   /** @param 暂存用户的拖拽行为 */
   temDragData: IDragEvent[];
+  /** @param 移动端的操作行为暂存 */
+  touchData: IDragEvent[];
+  /** @param 移动端是否处于拖拽开关 默认为false */
+  appDragFlag: boolean;
 }

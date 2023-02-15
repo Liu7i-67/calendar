@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:12:16
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 16:35:28
+ * @Last Modified time: 2023-02-15 10:22:39
  */
 
 export enum EView {
@@ -18,11 +18,23 @@ export enum EView {
   DIY = "DIY",
 }
 
+export enum EOptionTypeWeb {
+  MOUSEDOWN = "mousedown",
+  MOUSEUP = "mouseup",
+  MOUSEMOVE = "mousemove",
+}
+
+export enum EOptionTypeApp {
+  TOUCHMOVE = "touchmove",
+  TOUCHSTART = "touchstart",
+  TOUCHEND = "touchend",
+}
+
 export enum EOptionType {
-  mousedown = "mousedown",
-  mouseup = "mouseup",
-  mousemove = "mousemove",
-  touchmove = "touchmove",
-  touchstart = "touchstart",
-  touchend = "touchend",
+  MOUSEDOWN = "mousedown",
+  MOUSEUP = "mouseup",
+  MOUSEMOVE = "mousemove",
+  TOUCHMOVE = "touchmove",
+  TOUCHSTART = "touchstart",
+  TOUCHEND = "touchend",
 }

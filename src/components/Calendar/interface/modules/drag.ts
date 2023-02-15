@@ -4,11 +4,11 @@
  * @Last Modified by: liu7i
  * @Last Modified time: 2023-02-14 18:22:37
  */
-import type { EOptionType, IEventCol } from "../index";
+import type { EOptionTypeWeb, EOptionTypeApp, IEventCol } from "../index";
 
 export interface IDragEvent {
   /** @param 操作类型 */
-  type: EOptionType;
+  type: EOptionTypeWeb | EOptionTypeApp;
   /** @param 格子信息 */
   col: IEventCol;
   x?: number;

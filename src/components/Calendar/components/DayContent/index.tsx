@@ -2,27 +2,19 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:53:58
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 17:35:00
+ * @Last Modified time: 2023-02-15 15:36:11
  */
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import type { ICalendarApi } from "components/Calendar";
 import {
   Day,
-  DayRow,
-  TimeRow,
-  TimeRowItem,
-  DayRowItem,
-  NowLine,
   DayBoxStyle,
   DayTitle,
   TitleTimeRow,
   TitleDayRow,
-  TimeRowItemTips,
 } from "./index.css";
-import dayjs from "dayjs";
-import { classNames } from "../../utils";
-import type { EOptionType } from "components/Calendar/interface";
+import Background from "./Background";
+import Drag from "./Drag";
 
 export interface IDayContentProps {
   cRef: ICalendarApi;
@@ -34,30 +26,6 @@ export interface IDayContentProps {
 
 export const DayContent = function DayContent_(props: IDayContentProps) {
   const { cRef, timeStar, timeEnd } = props;
-  const [lineStyle, setLineStyle] = useState<React.CSSProperties>({ top: "0" });
-  const timer = React.useRef<number>(0);
-
-  const calcTop = React.useCallback(() => {
-    const range = (timeEnd - timeStar) * 60;
-    const now = (dayjs().get("hour") - timeStar) * 60 + dayjs().get("minute");
-    const top = `${(now / range) * 100}%`;
-    setLineStyle({
-      top,
-      display:
-        dayjs().format("YYYY-MM-DD") === dayjs(cRef.date).format("YYYY-MM-DD")
-          ? "block"
-          : "none",
-    });
-  }, [timeStar, timeEnd, cRef.date]);
-
-  useEffect(() => {
-    clearInterval(timer.current);
-    calcTop();
-    timer.current = window.setInterval(calcTop, 1000 * 60);
-    () => {
-      clearInterval(timer.current);
-    };
-  }, [timeStar, timeEnd, cRef.date]);
 
   return (
     <div className={DayBoxStyle}>
@@ -70,54 +38,8 @@ export const DayContent = function DayContent_(props: IDayContentProps) {
         ))}
       </div>
       <div className={Day}>
-        {/** 背景层 */}
-        <div className={TimeRow}>
-          {cRef.dayRender?.[0]?.range.map((i) => (
-            <div
-              className={classNames({
-                [TimeRowItem]: true,
-                block: i.isRangeBlock,
-              })}
-              key={i.id}
-            >
-              {!i.isRangeBlock && (
-                <>
-                  {dayjs(i.startTimeStr).format("H")}
-                  <span className={TimeRowItemTips}>00</span>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-        {cRef.dayRender?.[0]?.content.map((c) => (
-          <div className={DayRow} key={c[0].colId}>
-            {c.map((i) => (
-              <div
-                className={DayRowItem}
-                key={i.id}
-                onMouseDown={(e) => {
-                  cRef.dayBgOption(i, e);
-                }}
-                onMouseMove={(e) => {
-                  cRef.dayBgOption(i, e);
-                }}
-                onMouseUp={(e) => {
-                  cRef.dayBgOption(i, e);
-                }}
-                onTouchStart={(e) => {
-                  cRef.dayBgOption(i, e);
-                }}
-                onTouchMove={(e) => {
-                  cRef.dayBgOption(i, e);
-                }}
-                onTouchEnd={(e) => {
-                  cRef.dayBgOption(i, e);
-                }}
-              ></div>
-            ))}
-          </div>
-        ))}
-        <div className={NowLine} style={lineStyle}></div>
+        <Background cRef={cRef} timeEnd={timeEnd} timeStar={timeStar} />
+        <Drag cRef={cRef} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:52:56
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 17:35:22
+ * @Last Modified time: 2023-02-15 10:24:41
  */
 
 import React from "react";
@@ -36,9 +36,8 @@ export interface ICalendarApi {
    * @params newDate 日历新的日期-用于自定义模式
    */
   backToNow: (newDate?: Date) => void;
-  /** @function 日模式背景相关操作 */
-  dayBgOption: (
-    c: IEventCol,
-    e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => void;
+  /** @function 日模式背景web端相关操作 */
+  dayBgOptionWeb: (c: IEventCol, e: React.MouseEvent<HTMLDivElement>) => void;
+  /** @function 日模式背景app端相关操作 */
+  dayBgOptionApp: (c: IEventCol, e: React.TouchEvent<HTMLDivElement>) => void;
 }

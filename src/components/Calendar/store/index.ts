@@ -2,18 +2,19 @@
  * @Author: liu7i
  * @Date: 2023-02-09 11:20:27
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 18:27:02
+ * @Last Modified time: 2023-02-15 15:58:10
  */
 import React, { useCallback, useMemo } from "react";
 import { useImmer } from "@quarkunlimit/immer";
 import { createStore } from "@quarkunlimit/tiny";
 import { useMethods, useMount } from "@quarkunlimit/react-hooks";
-import type {
+import {
   ICalendarProps,
   IStore,
   IView,
   IEventCol,
   TDayRender,
+  EOptionTypeWeb,
 } from "../interface";
 import { EView, EOptionType } from "../interface";
 import { useCommonMethods } from "./subStore/useCommonMethods";
@@ -38,7 +39,35 @@ const initStore: IStore = {
   maxColNum: 16,
   index: 1,
   pageSize: 7,
-  temDragData: [],
+  temDragData: [
+    {
+      col: {
+        colId: "1",
+        endTimeStr: "2023-02-15 10:00:00",
+        id: "8",
+        startTimeStr: "2023-02-15 09:45:00",
+      },
+      time: 1676447755033,
+      type: EOptionTypeWeb.MOUSEDOWN,
+      x: 255,
+      y: 490,
+    },
+    {
+      col: {
+        colId: "1",
+        endTimeStr: "2023-02-15 08:30:00",
+        id: "8",
+        startTimeStr: "2023-02-15 08:15:00",
+      },
+      time: 1676447755033,
+      type: EOptionTypeWeb.MOUSEDOWN,
+      x: 256,
+      y: 491,
+    },
+  ],
+  touchInterval: 300,
+  appDragFlag: false,
+  touchData: [],
 };
 
 export function useStore(props: ICalendarProps) {
@@ -57,6 +86,7 @@ export function useStore(props: ICalendarProps) {
       o.timeEnd = props.timeEnd ?? initStore.timeEnd;
       o.minColNum = props.minColNum ?? initStore.minColNum;
       o.maxColNum = props.maxColNum ?? initStore.maxColNum;
+      o.touchInterval = props.touchInterval ?? initStore.touchInterval;
     });
   });
 
@@ -69,8 +99,10 @@ export function useStore(props: ICalendarProps) {
     nextDate: commonMethod.nextDate,
     /** @function 回到现在 */
     backToNow: commonMethod.backToNow,
-    /** @function 日模式背景相关操作 */
-    dayBgOption: dayMethod.dayBgOption,
+    /** @function 日模式背景相关操作-web端 */
+    dayBgOptionWeb: dayMethod.dayBgOptionWeb,
+    /** @function 日模式背景相关操作-app端 */
+    dayBgOptionApp: dayMethod.dayBgOptionApp,
     setData,
   });
 
