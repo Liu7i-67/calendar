@@ -27,7 +27,7 @@ export interface IDragProps {
 const Drag = function Drag_(props: IDragProps) {
   const { cRef } = props;
 
-  console.log("cRef?.dayRender:", cRef?.dayRender);
+  // console.log("cRef?.dayRender:", cRef?.dayRender);
 
   return (
     <div className={DragStyle}>
@@ -40,6 +40,7 @@ const Drag = function Drag_(props: IDragProps) {
               block: i.isRangeBlock,
             })}
             key={i.id}
+            style={i.style}
           ></div>
         ))}
       </div>
@@ -47,7 +48,7 @@ const Drag = function Drag_(props: IDragProps) {
         return (
           <div className={DragDayRow} key={`${cIndex}-${c?.[0]?.colId}`}>
             {c?.map?.((i) => (
-              <div className={DragDayRowItem} key={i.id}></div>
+              <div className={DragDayRowItem} key={i.id} style={i.style}></div>
             ))}
           </div>
         );

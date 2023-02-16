@@ -11,6 +11,7 @@ export const DayBoxStyle = style({
   position: "relative",
   height: "650px",
   overflowY: "auto",
+  userSelect: "none",
 });
 
 export const DayTitle = style({
@@ -19,7 +20,7 @@ export const DayTitle = style({
   display: "flex",
   height: "35px",
   paddingRight: "20px",
-  zIndex: 100,
+  zIndex: 500,
 });
 
 export const TitleTimeRow = style({
@@ -50,6 +51,7 @@ export const DayBg = style({
 });
 
 export const TimeRow = style({
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   width: vars.rangeLineWidth,
@@ -116,20 +118,22 @@ export const DragStyle = style({
 });
 
 export const DragTimeRowItem = style({
+  position: "absolute",
   height: "42px",
-  background: `rgba(255, 243, 200,0.5)`,
+  background: `rgba(255, 243, 177,0.8)`,
 });
 
 export const DragDayRow = style({
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   flex: 1,
 });
 
 export const DragDayRowItem = style({
-  height: "42px",
+  position: "absolute",
   textAlign: "center",
   borderTop: `1px solid ${vars.borderColor}`,
   borderRight: `1px solid ${vars.borderColor}`,
-  background: `rgba(253, 240, 255,0.5)`,
+  background: `rgba(253, 240, 229,0.8)`,
 });

@@ -39,32 +39,7 @@ const initStore: IStore = {
   maxColNum: 16,
   index: 1,
   pageSize: 7,
-  temDragData: [
-    {
-      col: {
-        colId: "1",
-        endTimeStr: "2023-02-15 10:00:00",
-        id: "8",
-        startTimeStr: "2023-02-15 09:45:00",
-      },
-      time: 1676447755033,
-      type: EOptionTypeWeb.MOUSEDOWN,
-      x: 255,
-      y: 490,
-    },
-    {
-      col: {
-        colId: "1",
-        endTimeStr: "2023-02-15 08:30:00",
-        id: "8",
-        startTimeStr: "2023-02-15 08:15:00",
-      },
-      time: 1676447755033,
-      type: EOptionTypeWeb.MOUSEDOWN,
-      x: 256,
-      y: 491,
-    },
-  ],
+  temDragData: [],
   touchInterval: 300,
   appDragFlag: false,
   touchData: [],

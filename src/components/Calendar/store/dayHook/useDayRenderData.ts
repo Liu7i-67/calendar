@@ -47,6 +47,11 @@ export const useDayRenderData = () => {
     }
     let index = 0;
 
+    let rangColId = "calendar-range";
+    if (computed.colItems?.[0]) {
+      rangColId = computed.colItems[0].id;
+    }
+
     while (dayjs(start).isBefore(end)) {
       index += 1;
       let nexStart = dayjs(start)
@@ -61,7 +66,7 @@ export const useDayRenderData = () => {
 
       rangeArr.push({
         id: "" + index,
-        colId: "calendar-range",
+        colId: rangColId,
         startTimeStr: start,
         endTimeStr: nexStart,
         isRangeBlock: start !== dayjs(start).format(`${timeStr} HH:00:00`),
@@ -117,7 +122,7 @@ export const useDayRenderData = () => {
     let start: IEventCol = colF;
     let end: IEventCol = colS;
 
-    if (dayjs(colF.startTimeStr).isAfter(colF.startTimeStr)) {
+    if (dayjs(colF.startTimeStr).isAfter(colS.startTimeStr)) {
       start = colS;
       end = colF;
     }
@@ -126,9 +131,22 @@ export const useDayRenderData = () => {
       id: "calendar-template",
       colId: colS.colId,
       startTimeStr: start.startTimeStr,
-      endTimeStr: end.endTimeStr,
+      endTimeStr:
+        start.startTimeStr === end.startTimeStr
+          ? end.endTimeStr
+          : end.startTimeStr,
       title: "新内容",
     };
+
+    const eventRange = +end.id - +start.id + 1;
+    const startRange = +start.id - 1;
+    const maxRange = (data.timeEnd - data.timeStar) * (60 / data.timeRange);
+    tempEvent.style = {
+      height: `${Math.abs((eventRange / maxRange) * 100)}%`,
+      top: `${Math.abs((startRange / maxRange) * 100)}%`,
+      width: `100%`,
+    };
+
     rangeArr.push({ ...tempEvent, id: "calendar-template-range" });
 
     const content: IEventCol[][] = [];
@@ -144,7 +162,14 @@ export const useDayRenderData = () => {
       range: rangeArr,
       content,
     } as IDayLayerDrag;
-  }, [data.view, computed.colItems, data.temDragData]);
+  }, [
+    data.view,
+    computed.colItems,
+    data.temDragData,
+    data.timeStar,
+    data.timeEnd,
+    data.timeRange,
+  ]);
 
   return [bgRender, dragEventRender] as TDayRender;
 };

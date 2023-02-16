@@ -55,7 +55,14 @@ const Background = function Background_(props: IBackgroundProps) {
   }, [timeStar, timeEnd, cRef.date]);
 
   return (
-    <div className={DayBg}>
+    <div
+      className={DayBg}
+      draggable={false}
+      onDragStart={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
       {/** 背景层 */}
       <div className={TimeRow}>
         {cRef.dayRender?.[0]?.range.map((i) => (
@@ -65,6 +72,24 @@ const Background = function Background_(props: IBackgroundProps) {
               block: i.isRangeBlock,
             })}
             key={i.id}
+            onMouseDown={(e) => {
+              cRef.dayBgOptionWeb(i, e);
+            }}
+            onMouseMove={(e) => {
+              cRef.dayBgOptionWeb(i, e);
+            }}
+            onMouseUp={(e) => {
+              cRef.dayBgOptionWeb(i, e);
+            }}
+            onTouchStart={(e) => {
+              cRef.dayBgOptionApp(i, e);
+            }}
+            onTouchMove={(e) => {
+              cRef.dayBgOptionApp(i, e);
+            }}
+            onTouchEnd={(e) => {
+              cRef.dayBgOptionApp(i, e);
+            }}
           >
             {!i.isRangeBlock && (
               <>

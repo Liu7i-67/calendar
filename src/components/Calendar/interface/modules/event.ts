@@ -5,6 +5,8 @@
  * @Last Modified time: 2023-02-15 15:12:08
  */
 
+import React from "react";
+
 export interface IEvent {
   /** @param 事件唯一标识符 */
   id: string;
@@ -22,6 +24,8 @@ export interface IEvent {
   title: string;
   /** @param 是否可拖动 默认为true */
   canDrag?: boolean;
+  /** @param 事件的布局样式-内部计算得出 百分比 */
+  style?: React.CSSProperties;
   [key: string]: any;
 }
 
