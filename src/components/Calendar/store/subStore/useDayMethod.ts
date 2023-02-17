@@ -14,6 +14,7 @@ import {
   EOptionTypeApp,
 } from "components/Calendar/interface";
 import { getSEInfo, DH } from "components/Calendar/utils";
+import { cloneDeep } from "lodash";
 
 export const useDayMethod = (_props: ISubRootProps) => {
   const { data, setData, props } = _props;
@@ -21,11 +22,7 @@ export const useDayMethod = (_props: ISubRootProps) => {
   const _methods = useMethods({
     /** @function 日模式背景相关操作-WEB端 */
     dayBgOptionWeb(c: IEventCol, e: React.MouseEvent<HTMLDivElement>) {
-      if (data?.temDragData?.[0]?.type === EOptionTypeApp.TOUCHSTART) {
-        return;
-      }
-
-      if (data?.touchData?.[0]?.type === EOptionTypeApp.TOUCHSTART) {
+      if (!data.isWeb) {
         return;
       }
 
@@ -89,6 +86,12 @@ export const useDayMethod = (_props: ISubRootProps) => {
     },
     /** @function 日模式背景相关操作-移动端 */
     dayBgOptionApp(c: IEventCol, e: React.TouchEvent<HTMLDivElement>) {
+      if (data.isWeb) {
+        setData((o) => {
+          o.isWeb = false;
+        });
+      }
+
       switch (e.type) {
         case EOptionTypeApp.TOUCHSTART:
           {

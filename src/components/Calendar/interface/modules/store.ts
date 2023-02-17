@@ -25,6 +25,8 @@ export interface IPropsInit {
 }
 
 export interface IStore extends IPropsInit {
+  /** @param 是否为web版 默认为true */
+  isWeb: boolean;
   /** @param 日历当前的时间 */
   date: Date;
   /** @param 当前展示的视图 */

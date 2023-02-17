@@ -43,6 +43,7 @@ const initStore: IStore = {
   touchInterval: 300,
   appDragFlag: false,
   touchData: [],
+  isWeb: true,
 };
 
 export function useStore(props: ICalendarProps) {
