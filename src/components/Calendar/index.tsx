@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 14:44:59
+ * @Last Modified time: 2023-02-17 09:30:48
  */
 
 import React from "react";
@@ -28,12 +28,16 @@ const Calendar = function Calendar_({
         view: data.view,
         dayRender: dayRender,
         colItems: computed.colItems,
+        canAddCol: computed.canAddCol,
+        canReduceCol: computed.canReduceCol,
         changeView: methods.changeView,
         backDate: methods.backDate,
         nextDate: methods.nextDate,
         backToNow: methods.backToNow,
         dayBgOptionWeb: methods.dayBgOptionWeb,
         dayBgOptionApp: methods.dayBgOptionApp,
+        nextColItems: methods.nextColItems,
+        preColItems: methods.preColItems,
       })}
     </div>
   );
@@ -54,3 +58,4 @@ export * from "./components/ErrorBoundary";
 export * from "./components/ToolBar";
 export * from "./components/Dropdown";
 export * from "./components/DayContent";
+export * from "./utils";

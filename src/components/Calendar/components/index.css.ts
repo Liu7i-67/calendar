@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:27:11
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 15:58:01
+ * @Last Modified time: 2023-02-16 18:15:58
  */
 
 import { createTheme, style } from "@vanilla-extract/css";
@@ -38,4 +38,6 @@ export const [themeClass, vars] = createTheme({
 
   /** @param 时间轴列的宽度 */
   rangeLineWidth: "50px",
+  /** @param 日历主体和滚动条的间距 */
+  scrollPadding: "20px",
 });

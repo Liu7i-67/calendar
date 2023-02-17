@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:54:08
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 16:08:23
+ * @Last Modified time: 2023-02-16 18:20:36
  */
 import { style } from "@vanilla-extract/css";
 import { vars } from "../index.css";
@@ -19,7 +19,7 @@ export const DayTitle = style({
   top: 0,
   display: "flex",
   height: "35px",
-  paddingRight: "20px",
+  paddingRight: vars.scrollPadding,
   zIndex: 500,
 });
 
@@ -40,6 +40,31 @@ export const TitleDayRow = style({
   borderLeft: "none",
 });
 
+export const PreColBtn = style({
+  position: "absolute",
+  top: "1px",
+  left: vars.rangeLineWidth,
+  height: "calc(100% - 1px)",
+  width: "21px",
+  display: "flex",
+  alignItems: "center",
+  color: vars.mainColor,
+  justifyContent: "center",
+  background: vars.colBgColor,
+  borderRight: `1px solid ${vars.borderColor}`,
+  fontSize: "18px",
+  cursor: "pointer",
+});
+
+export const PreRightBtn = style([
+  PreColBtn,
+  {
+    right: vars.scrollPadding,
+    left: "auto",
+    borderLeft: `1px solid ${vars.borderColor}`,
+  },
+]);
+
 export const Day = style({
   position: "relative",
 });
@@ -47,7 +72,7 @@ export const Day = style({
 export const DayBg = style({
   position: "relative",
   display: "flex",
-  paddingRight: "20px",
+  paddingRight: vars.scrollPadding,
 });
 
 export const TimeRow = style({

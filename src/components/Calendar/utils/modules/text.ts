@@ -1,48 +1,12 @@
 /*
  * @Author: liu7i
- * @Date: 2023-01-20 17:18:22
+ * @Date: 2023-02-17 09:41:36
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 16:16:45
+ * @Last Modified time: 2023-02-17 10:06:30
  */
-
-import { EView, IView } from "./interface";
+import { EView, IView } from "../../interface";
 import dayjs from "dayjs";
-
-export const classNames = (obj: { [key: string]: boolean | undefined }) => {
-  let className = "";
-  Object.keys(obj).forEach((i) => {
-    // @ts-ignore
-    if (obj[i] as boolean) {
-      className += `${i} `;
-    }
-  });
-  return className;
-};
-
-export const cnWeekDay = {
-  0: "周日",
-  1: "周一",
-  2: "周二",
-  3: "周三",
-  4: "周四",
-  5: "周五",
-  6: "周六",
-};
-
-export const cnMonth = [
-  "一月",
-  "二月",
-  "三月",
-  "四月",
-  "五月",
-  "六月",
-  "七月",
-  "八月",
-  "九月",
-  "十月",
-  "十一月",
-  "十二月",
-];
+import { cnMonth, cnWeekDay, DH } from "../index";
 
 export const getNowTitle = (
   date: Date,
@@ -53,8 +17,8 @@ export const getNowTitle = (
   switch (view.type) {
     case EView.DAY:
       {
-        title = `${dayjs(date).format("YYYY年 MM月DD日")} (${
-          cnWeekDay[+dayjs(date).format("d") as 0 | 1 | 2 | 3 | 4 | 5 | 6]
+        title = `${DH(date).format("YYYY年 MM月DD日")} (${
+          cnWeekDay[+DH(date).format("d") as 0 | 1 | 2 | 3 | 4 | 5 | 6]
         }) `;
       }
       break;

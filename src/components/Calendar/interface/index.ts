@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:42
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 18:23:05
+ * @Last Modified time: 2023-02-16 15:54:58
  */
 import type { ICalendarApi } from "./modules/calendar";
 import type { EView } from "./modules/enum";
@@ -27,6 +27,8 @@ export interface ICalendarProps extends Partial<IPropsInit> {
   events?: IEvent[];
   /** @param 专家信息 */
   colItems?: IColItem[];
+  /** @function 视图改变时触发的事件 */
+  onViewChange?: (nView: IView) => void;
 }
 
 export interface IDropDownContent {

@@ -2,9 +2,9 @@
  * @Author: liu7i
  * @Date: 2023-02-09 11:20:27
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 15:58:10
+ * @Last Modified time: 2023-02-16 18:19:30
  */
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useImmer } from "@quarkunlimit/immer";
 import { createStore } from "@quarkunlimit/tiny";
 import { useMethods, useMount } from "@quarkunlimit/react-hooks";
@@ -55,7 +55,7 @@ export function useStore(props: ICalendarProps) {
     setData((o) => {
       o.date = props.defaultDate ?? initStore.date;
       o.views = props.views ?? initStore.views;
-      o.view = o.views[0];
+      o.view = props.defaultView ?? o.views[0];
       o.timeRange = props.timeRange ?? initStore.timeRange;
       o.timeStar = props.timeStar ?? initStore.timeStar;
       o.timeEnd = props.timeEnd ?? initStore.timeEnd;
@@ -64,6 +64,12 @@ export function useStore(props: ICalendarProps) {
       o.touchInterval = props.touchInterval ?? initStore.touchInterval;
     });
   });
+
+  useEffect(() => {
+    setData((o) => {
+      o.index = 1;
+    });
+  }, [props.colItems]);
 
   const methods = useMethods({
     /** @function 改变当前激活的日历模式 */
@@ -79,6 +85,10 @@ export function useStore(props: ICalendarProps) {
     /** @function 日模式背景相关操作-app端 */
     dayBgOptionApp: dayMethod.dayBgOptionApp,
     setData,
+    /** @function 展示下一页专家信息 */
+    nextColItems: commonMethod.nextColItems,
+    /** @function 展示上一页专家信息 */
+    preColItems: commonMethod.preColItems,
   });
 
   return {
@@ -87,6 +97,8 @@ export function useStore(props: ICalendarProps) {
     methods,
     computed: {
       colItems: commonComputed.colItems,
+      canAddCol: commonComputed.canAddCol,
+      canReduceCol: commonComputed.canReduceCol,
     },
   };
 }

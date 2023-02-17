@@ -2,21 +2,22 @@
  * @Author: liu7i
  * @Date: 2023-02-14 16:58:37
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 17:59:33
+ * @Last Modified time: 2023-02-16 16:34:44
  */
 import type { IView } from "components/Calendar/interface";
 import { useMethods } from "@quarkunlimit/react-hooks";
 import { EView, ISubRootProps } from "components/Calendar/interface";
 import dayjs from "dayjs";
 
-export const useCommonMethods = (props: ISubRootProps) => {
-  const { data, setData } = props;
+export const useCommonMethods = (_props: ISubRootProps) => {
+  const { data, setData, props } = _props;
 
   const _methods = useMethods({
     /** @function 改变当前激活的日历模式 */
     changeView: (v: IView) => {
       setData((o) => {
         o.view = v;
+        props.onViewChange?.(o.view);
       });
     },
     /** @function 向前调整日期 */
@@ -101,6 +102,25 @@ export const useCommonMethods = (props: ISubRootProps) => {
       }
       setData((o) => {
         o.date = new Date();
+      });
+    },
+    /** @function 展示下一页专家信息 */
+    nextColItems: () => {
+      setData((o) => {
+        if (o.index * o.pageSize - 2 < (props.colItems?.length ?? 0)) {
+          o.index = o.index + 1;
+        }
+      });
+    },
+    /** @function 展示上一页专家信息 */
+    preColItems: () => {
+      setData((o) => {
+        let nextIndex = o.index - 1;
+        if (nextIndex < 1) {
+          nextIndex = 1;
+        }
+
+        o.index = nextIndex;
       });
     },
   });

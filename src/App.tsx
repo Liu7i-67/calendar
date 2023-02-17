@@ -2,8 +2,9 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:00:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 16:05:04
+ * @Last Modified time: 2023-02-17 10:23:43
  */
+import { useState, useMemo } from "react";
 import Calendar, {
   themeClass,
   ErrorBoundary,
@@ -12,9 +13,13 @@ import Calendar, {
   Dropdown,
   DayContent,
   EView,
+  IColItem,
+  removeRepeat,
+  DH,
 } from "components/Calendar";
 import dayjs from "dayjs";
 import "./App.css";
+import { dayData } from "./mock";
 
 const rightExtra = [
   {
@@ -45,35 +50,49 @@ const events = [
   },
 ];
 
-const cols = [
-  {
-    id: "1",
-    title: "张三",
-  },
-  {
-    id: "2",
-    title: "李四",
-  },
-  {
-    id: "3",
-    title: "王五",
-  },
-  {
-    id: "4",
-    title: "赵二",
-  },
-];
-
 function App() {
+  const [state, setState] = useState({ type: EView.DAY, title: "日" });
+
+  const colItems = useMemo(() => {
+    switch (state.type) {
+      case EView.DAY: {
+        const arr = removeRepeat(
+          dayData.data.expert.map((i) => {
+            return {
+              ...i,
+              id: i.value,
+              title: i.label,
+            } as IColItem;
+          }),
+          "id"
+        );
+        return arr;
+      }
+      default: {
+        const i = dayData.data.expert[0];
+        return [
+          {
+            ...i,
+            id: i.value,
+            title: i.label,
+          } as IColItem,
+        ];
+      }
+    }
+  }, []);
+
   return (
     <div className="App">
       <ErrorBoundary>
         <Calendar
           events={events}
-          colItems={cols}
+          colItems={colItems}
           timeStar={8}
           timeEnd={22}
           timeRange={15}
+          onViewChange={(v) => {
+            setState(v);
+          }}
         >
           {(ref) => {
             return (
@@ -88,20 +107,6 @@ function App() {
             );
           }}
         </Calendar>
-        <Dropdown
-          content={[
-            {
-              key: "add",
-              node: <div>新增</div>,
-            },
-            {
-              key: "edit",
-              node: <div>编辑</div>,
-            },
-          ]}
-        >
-          操作
-        </Dropdown>
       </ErrorBoundary>
     </div>
   );

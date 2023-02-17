@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:53:58
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 15:36:11
+ * @Last Modified time: 2023-02-16 16:42:57
  */
 import React from "react";
 import type { ICalendarApi } from "components/Calendar";
@@ -15,6 +15,7 @@ import {
 } from "./index.css";
 import Background from "./Background";
 import Drag from "./Drag";
+import TopTitle from "./TopTitle";
 
 export interface IDayContentProps {
   cRef: ICalendarApi;
@@ -29,14 +30,7 @@ export const DayContent = function DayContent_(props: IDayContentProps) {
 
   return (
     <div className={DayBoxStyle}>
-      <div className={DayTitle}>
-        <div className={TitleTimeRow}></div>
-        {cRef.colItems.map((c) => (
-          <div className={TitleDayRow} key={c.id}>
-            {c.title}
-          </div>
-        ))}
-      </div>
+      <TopTitle cRef={cRef} />
       <div className={Day}>
         <Background cRef={cRef} timeEnd={timeEnd} timeStar={timeStar} />
         <Drag cRef={cRef} />

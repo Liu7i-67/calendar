@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-13 18:09:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 15:12:08
+ * @Last Modified time: 2023-02-16 16:12:53
  */
 
 import React from "react";
@@ -51,6 +51,7 @@ export interface IColItem {
   id: string;
   /** @param 名称 */
   title: string;
+  [key: string]: any;
 }
 
 export interface IDayLayerBg {

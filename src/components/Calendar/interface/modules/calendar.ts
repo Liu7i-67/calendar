@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:52:56
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 10:24:41
+ * @Last Modified time: 2023-02-16 18:20:34
  */
 
 import React from "react";
@@ -19,6 +19,10 @@ export interface ICalendarApi {
   dayRender: TDayRender;
   /** @param 当前展示的专家信息 */
   colItems: IColItem[];
+  /** @param 是否可以减少当前页可视专家 */
+  canReduceCol: boolean;
+  /** @param 是否可以增加当前页可视专家 */
+  canAddCol: boolean;
   /** @function 改变当前激活的视图 */
   changeView: (v: IView) => void;
   /**
@@ -40,4 +44,8 @@ export interface ICalendarApi {
   dayBgOptionWeb: (c: IEventCol, e: React.MouseEvent<HTMLDivElement>) => void;
   /** @function 日模式背景app端相关操作 */
   dayBgOptionApp: (c: IEventCol, e: React.TouchEvent<HTMLDivElement>) => void;
+  /** @function 展示下一页专家信息 */
+  nextColItems: () => void;
+  /** @function 展示上一页专家信息 */
+  preColItems: () => void;
 }
