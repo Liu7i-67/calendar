@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 18:15:58
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 16:10:42
+ * @Last Modified time: 2023-02-17 11:50:09
  */
 
 import type { IEventCol } from "components/Calendar/interface";
@@ -13,7 +13,7 @@ import {
   EOptionTypeWeb,
   EOptionTypeApp,
 } from "components/Calendar/interface";
-import cloneDeep from "lodash/cloneDeep";
+import { getSEInfo, DH } from "components/Calendar/utils";
 
 export const useDayMethod = (_props: ISubRootProps) => {
   const { data, setData, props } = _props;
@@ -72,6 +72,15 @@ export const useDayMethod = (_props: ISubRootProps) => {
                 col: c,
                 time: Date.now(),
               };
+
+              const res = getSEInfo(o.temDragData);
+
+              props.onEventAdd?.({
+                startTime: res.start.startTimeStr,
+                endTime: res.end.endTimeStr,
+                colId: res.colId,
+              });
+
               o.temDragData.splice(0, 2);
             });
           }
@@ -95,6 +104,14 @@ export const useDayMethod = (_props: ISubRootProps) => {
               if (data.touchData[0]) {
                 // 拖动操作结束
                 if (Date.now() - data.touchData[0].time < data.touchInterval) {
+                  const res = getSEInfo(data.temDragData as IDragEvent[]);
+
+                  props.onEventAdd?.({
+                    startTime: res.start.startTimeStr,
+                    endTime: res.end.endTimeStr,
+                    colId: res.colId,
+                  });
+
                   setData((o) => {
                     o.appDragFlag = false;
                     o.temDragData.splice(0, 2);

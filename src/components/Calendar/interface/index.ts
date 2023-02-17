@@ -2,13 +2,14 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:42
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 15:54:58
+ * @Last Modified time: 2023-02-17 11:25:03
  */
 import type { ICalendarApi } from "./modules/calendar";
 import type { EView } from "./modules/enum";
 import type { IPropsInit, IStore } from "./modules/store";
 import type { IEvent, IColItem } from "./modules/event";
 import type { Draft, Immutable } from "immer";
+import type { IAddRangeInfo } from "./modules/drag";
 
 export interface IView {
   /** @param 类型 */
@@ -29,6 +30,8 @@ export interface ICalendarProps extends Partial<IPropsInit> {
   colItems?: IColItem[];
   /** @function 视图改变时触发的事件 */
   onViewChange?: (nView: IView) => void;
+  /** @function 新增事件 */
+  onEventAdd?: (range: IAddRangeInfo) => void;
 }
 
 export interface IDropDownContent {

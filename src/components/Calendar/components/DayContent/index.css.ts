@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:54:08
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 18:20:36
+ * @Last Modified time: 2023-02-17 11:16:38
  */
 import { style } from "@vanilla-extract/css";
 import { vars } from "../index.css";
@@ -109,7 +109,7 @@ export const DayRow = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: vars.disabledBg,
+  background: vars.normalBg,
   borderBottom: `1px solid ${vars.borderColor}`,
 });
 

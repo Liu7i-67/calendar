@@ -2,10 +2,10 @@
  * @Author: liu7i
  * @Date: 2023-02-14 16:58:37
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 10:51:05
+ * @Last Modified time: 2023-02-17 11:40:40
  */
 import { useMemo } from "react";
-import { ISubRootProps } from "components/Calendar/interface";
+import type { ISubRootProps } from "components/Calendar/interface";
 
 export const useCommonComputed = (_props: ISubRootProps) => {
   const { data, props } = _props;

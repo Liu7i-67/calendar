@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 18:03:12
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 16:12:50
+ * @Last Modified time: 2023-02-17 11:42:25
  */
 
 import { useMemo } from "react";
@@ -15,6 +15,7 @@ import type {
 } from "components/Calendar/interface";
 import { EView } from "components/Calendar/interface";
 import { RootStore } from "components/Calendar/store";
+import { getSEInfo } from "components/Calendar/utils";
 import dayjs from "dayjs";
 
 export const useDayRenderData = () => {
@@ -116,20 +117,12 @@ export const useDayRenderData = () => {
       } as IDayLayerDrag;
     }
 
-    const colF = data.temDragData[0].col;
-    const colS = data.temDragData[1].col;
+    const { start, end, colId } = getSEInfo(data.temDragData);
     // 对比起始点和结束点位置
-    let start: IEventCol = colF;
-    let end: IEventCol = colS;
-
-    if (dayjs(colF.startTimeStr).isAfter(colS.startTimeStr)) {
-      start = colS;
-      end = colF;
-    }
 
     const tempEvent: IEvent = {
       id: "calendar-template",
-      colId: colS.colId,
+      colId,
       startTimeStr: start.startTimeStr,
       endTimeStr:
         start.startTimeStr === end.startTimeStr

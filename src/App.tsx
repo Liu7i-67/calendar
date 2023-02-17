@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:00:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 10:49:26
+ * @Last Modified time: 2023-02-17 11:34:55
  */
 import { useState, useMemo } from "react";
 import Calendar, {
@@ -92,6 +92,9 @@ function App() {
           timeRange={15}
           onViewChange={(v) => {
             setState(v);
+          }}
+          onEventAdd={(c) => {
+            console.log("新建预约:", c);
           }}
         >
           {(ref) => {

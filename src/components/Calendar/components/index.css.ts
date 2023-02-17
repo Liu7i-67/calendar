@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:27:11
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 18:15:58
+ * @Last Modified time: 2023-02-17 11:16:08
  */
 
 import { createTheme, style } from "@vanilla-extract/css";
@@ -24,6 +24,8 @@ export const [themeClass, vars] = createTheme({
   writeColor: "#ffffff",
   /** @parma 无排班背景色 */
   disabledBg: "#EFF4F8",
+  /** @param 有排班背景色 */
+  normalBg: "#FFFFF9",
   /** @param 边框色 */
   borderColor: "#CECECE",
   /** @param 当前时间颜色 */
