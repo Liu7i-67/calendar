@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 16:58:37
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 16:34:44
+ * @Last Modified time: 2023-02-17 10:51:37
  */
 import type { IView } from "components/Calendar/interface";
 import { useMethods } from "@quarkunlimit/react-hooks";
@@ -107,7 +107,10 @@ export const useCommonMethods = (_props: ISubRootProps) => {
     /** @function 展示下一页专家信息 */
     nextColItems: () => {
       setData((o) => {
-        if (o.index * o.pageSize - 2 < (props.colItems?.length ?? 0)) {
+        if (
+          o.index * o.pageSize - 2 * (data.index - 1) <
+          (props.colItems?.length ?? 0)
+        ) {
           o.index = o.index + 1;
         }
       });
@@ -121,6 +124,26 @@ export const useCommonMethods = (_props: ISubRootProps) => {
         }
 
         o.index = nextIndex;
+      });
+    },
+    /** @function 减少每页可视专家数量 */
+    reducePageSize: () => {
+      if (data.pageSize === data.minColNum) {
+        return;
+      }
+      setData((o) => {
+        o.pageSize -= 1;
+        o.index = 1;
+      });
+    },
+    /** @function 增加每页可视专家数量 */
+    addPageSize: () => {
+      if (data.pageSize === data.maxColNum) {
+        return;
+      }
+      setData((o) => {
+        o.pageSize += 1;
+        o.index = 1;
       });
     },
   });

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 16:58:37
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 18:19:07
+ * @Last Modified time: 2023-02-17 10:51:05
  */
 import { useMemo } from "react";
 import { ISubRootProps } from "components/Calendar/interface";
@@ -11,7 +11,7 @@ export const useCommonComputed = (_props: ISubRootProps) => {
   const { data, props } = _props;
 
   const colItems = useMemo(() => {
-    let start = (data.index - 1) * data.pageSize - 2;
+    let start = (data.index - 1) * data.pageSize - 2 * (data.index - 1);
     if (start < 0) {
       start = 0;
     }
@@ -34,7 +34,10 @@ export const useCommonComputed = (_props: ISubRootProps) => {
   }, [data.index]);
 
   const canAddCol = useMemo(() => {
-    return data.index * data.pageSize - 2 < (props.colItems?.length ?? 0);
+    return (
+      data.index * data.pageSize - 2 * (data.index - 1) <
+      (props.colItems?.length ?? 0)
+    );
   }, [data.index, data.pageSize, props.colItems]);
 
   return { colItems, canReduceCol, canAddCol };

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:52:56
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 18:20:34
+ * @Last Modified time: 2023-02-17 10:37:02
  */
 
 import React from "react";
@@ -48,4 +48,8 @@ export interface ICalendarApi {
   nextColItems: () => void;
   /** @function 展示上一页专家信息 */
   preColItems: () => void;
+  /** @function 减少每页可视专家数量 */
+  reducePageSize: () => void;
+  /** @function 增加每页可视专家数量 */
+  addPageSize: () => void;
 }

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-09 11:20:27
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 18:19:30
+ * @Last Modified time: 2023-02-17 10:35:30
  */
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useImmer } from "@quarkunlimit/immer";
@@ -89,6 +89,10 @@ export function useStore(props: ICalendarProps) {
     nextColItems: commonMethod.nextColItems,
     /** @function 展示上一页专家信息 */
     preColItems: commonMethod.preColItems,
+    /** @function 减少每页可视专家数量 */
+    reducePageSize: commonMethod.reducePageSize,
+    /** @function 增加每页可视专家数量 */
+    addPageSize: commonMethod.addPageSize,
   });
 
   return {

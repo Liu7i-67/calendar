@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:27:47
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-10 11:52:38
+ * @Last Modified time: 2023-02-17 10:37:37
  */
 
 import React from "react";
@@ -118,8 +118,12 @@ export const ToolBar = function ToolBar_(props: IToolBarProps) {
           <>
             <i
               className={`iconfont icon-zuixiaohua-copy ${toolBarRightBtnLeft}`}
+              onClick={cRef.reducePageSize}
             />
-            <i className={`iconfont icon-plus ${toolBarRightBtnRight}`} />
+            <i
+              className={`iconfont icon-plus ${toolBarRightBtnRight}`}
+              onClick={cRef.addPageSize}
+            />
           </>
         )}
       </div>

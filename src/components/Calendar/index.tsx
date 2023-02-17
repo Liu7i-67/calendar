@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:24
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 09:30:48
+ * @Last Modified time: 2023-02-17 10:37:13
  */
 
 import React from "react";
@@ -38,6 +38,8 @@ const Calendar = function Calendar_({
         dayBgOptionApp: methods.dayBgOptionApp,
         nextColItems: methods.nextColItems,
         preColItems: methods.preColItems,
+        reducePageSize: methods.reducePageSize,
+        addPageSize: methods.addPageSize,
       })}
     </div>
   );

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-08 11:30:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-14 11:30:13
+ * @Last Modified time: 2023-02-17 10:30:20
  */
 
 import { style } from "@vanilla-extract/css";
@@ -104,32 +104,6 @@ export const toolBarRight = style({
   },
 });
 
-export const toolBarRightBtnLeft = style({
-  position: "relative",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "40px",
-  height: "32px",
-  fontWeight: "bold",
-  borderTopLeftRadius: "50%",
-  borderBottomLeftRadius: "50%",
-  background: vars.dayReduceBtnBgColor,
-  color: vars.dayReduceBtnColor,
-  selectors: {
-    "&::after": {
-      content: "",
-      display: "block",
-      width: "1px",
-      height: "18px",
-      background: vars.dayReduceBtnBeforeBgColor,
-      position: "absolute",
-      right: 0,
-      top: "calc(50% - 9px)",
-    },
-  },
-});
-
 export const toolBarRightBtnRight = style({
   display: "inline-flex",
   alignItems: "center",
@@ -141,7 +115,32 @@ export const toolBarRightBtnRight = style({
   borderBottomRightRadius: "50%",
   background: vars.dayAddBtnBgColor,
   color: vars.dayAddBtnColor,
+  cursor: "pointer",
 });
+
+export const toolBarRightBtnLeft = style([
+  toolBarRightBtnRight,
+  {
+    position: "relative",
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: "50%",
+    borderBottomLeftRadius: "50%",
+    background: vars.dayReduceBtnBgColor,
+    selectors: {
+      "&::after": {
+        content: "",
+        display: "block",
+        width: "1px",
+        height: "18px",
+        background: vars.dayReduceBtnBeforeBgColor,
+        position: "absolute",
+        right: 0,
+        top: "calc(50% - 9px)",
+      },
+    },
+  },
+]);
 
 export const toolBarRightContent = style({
   display: "flex",
