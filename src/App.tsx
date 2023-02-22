@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:00:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 11:34:55
+ * @Last Modified time: 2023-02-22 11:45:05
  */
 import { useState, useMemo } from "react";
 import Calendar, {
@@ -86,6 +86,13 @@ function App() {
       <ErrorBoundary>
         <Calendar
           events={events}
+          maskEvents={[
+            {
+              colId: "4ee3916160b959f119e287fd08ca3fd3",
+              startTimeStr: "2023-02-22 9:00",
+              endTimeStr: "2023-02-22 10:00",
+            },
+          ]}
           colItems={colItems}
           timeStar={8}
           timeEnd={22}

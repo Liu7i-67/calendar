@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-15 15:35:14
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-15 16:11:18
+ * @Last Modified time: 2023-02-22 11:48:19
  */
 
 import React, { useState, useEffect } from "react";
@@ -33,7 +33,7 @@ const Drag = function Drag_(props: IDragProps) {
     <div className={DragStyle}>
       {/** 背景层 */}
       <div className={TimeRow}>
-        {cRef?.dayRender?.[1]?.range?.map?.((i) => (
+        {cRef?.dayRender?.[2]?.range?.map?.((i) => (
           <div
             className={classNames({
               [DragTimeRowItem]: true,
@@ -44,7 +44,7 @@ const Drag = function Drag_(props: IDragProps) {
           ></div>
         ))}
       </div>
-      {cRef?.dayRender?.[1]?.content?.map?.((c, cIndex) => {
+      {cRef?.dayRender?.[2]?.content?.map?.((c, cIndex) => {
         return (
           <div className={DragDayRow} key={`${cIndex}-${c?.[0]?.colId}`}>
             {c?.map?.((i) => (

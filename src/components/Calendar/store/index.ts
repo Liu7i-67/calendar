@@ -2,21 +2,14 @@
  * @Author: liu7i
  * @Date: 2023-02-09 11:20:27
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 10:35:30
+ * @Last Modified time: 2023-02-22 11:45:27
  */
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useImmer } from "@quarkunlimit/immer";
 import { createStore } from "@quarkunlimit/tiny";
 import { useMethods, useMount } from "@quarkunlimit/react-hooks";
-import {
-  ICalendarProps,
-  IStore,
-  IView,
-  IEventCol,
-  TDayRender,
-  EOptionTypeWeb,
-} from "../interface";
-import { EView, EOptionType } from "../interface";
+import { ICalendarProps, IStore, IView } from "../interface";
+import { EView } from "../interface";
 import { useCommonMethods } from "./subStore/useCommonMethods";
 import { useCommonComputed } from "./subStore/useCommonComputed";
 import { useDayMethod } from "./subStore/useDayMethod";

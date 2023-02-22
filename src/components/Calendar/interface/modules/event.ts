@@ -2,10 +2,19 @@
  * @Author: liu7i
  * @Date: 2023-02-13 18:09:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 16:12:53
+ * @Last Modified time: 2023-02-22 11:46:35
  */
 
 import React from "react";
+
+export interface IMaskEvent {
+  /** @param 事件所属专家id */
+  colId: string;
+  /** @param 事件开始时间 YYYY-MM-DD HH:mm:ss */
+  startTimeStr: string;
+  /** @param 事件结束时间 YYYY-MM-DD HH:mm:ss */
+  endTimeStr: string;
+}
 
 export interface IEvent {
   /** @param 事件唯一标识符 */
@@ -68,4 +77,11 @@ export interface IDayLayerDrag {
   content: IEvent[][];
 }
 
-export type TDayRender = [IDayLayerBg, IDayLayerDrag];
+export interface IDayLayerMask {
+  /** @param 时间轴信息 */
+  range: [];
+  /** @param 内容信息 */
+  content: IMaskEvent[][];
+}
+
+export type TDayRender = [IDayLayerBg, IDayLayerMask, IDayLayerDrag];

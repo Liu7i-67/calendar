@@ -2,12 +2,12 @@
  * @Author: liu7i
  * @Date: 2023-01-20 15:51:42
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 11:25:03
+ * @Last Modified time: 2023-02-22 11:43:26
  */
 import type { ICalendarApi } from "./modules/calendar";
 import type { EView } from "./modules/enum";
 import type { IPropsInit, IStore } from "./modules/store";
-import type { IEvent, IColItem } from "./modules/event";
+import type { IEvent, IColItem, IMaskEvent } from "./modules/event";
 import type { Draft, Immutable } from "immer";
 import type { IAddRangeInfo } from "./modules/drag";
 
@@ -26,6 +26,8 @@ export interface ICalendarProps extends Partial<IPropsInit> {
   defaultView?: IView;
   /** @param 事件 */
   events?: IEvent[];
+  /** @param 遮罩事件-禁用时间 */
+  maskEvents?: IMaskEvent[];
   /** @param 专家信息 */
   colItems?: IColItem[];
   /** @function 视图改变时触发的事件 */
