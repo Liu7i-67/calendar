@@ -89,8 +89,8 @@ function App() {
           maskEvents={[
             {
               colId: "4ee3916160b959f119e287fd08ca3fd3",
-              startTimeStr: "2023-02-22 9:00",
-              endTimeStr: "2023-02-22 10:00",
+              startTimeStr: "2023-02-28 9:00",
+              endTimeStr: "2023-02-28 10:10",
             },
           ]}
           colItems={colItems}

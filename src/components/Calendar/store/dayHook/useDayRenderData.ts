@@ -186,7 +186,14 @@ export const useDayRenderData = () => {
 
     const content: IMaskEvent[][] = [];
 
+    /** @param 今天的str */
     const todayStr = DH(data.date).format("YYYY-MM-DD");
+    /** @param 今天开始时间的str */
+    const rangeStartStr = `${todayStr} ${`${data.timeStar}`.padStart(
+      2,
+      "0"
+    )}:00:00`;
+
     computed.colItems.forEach((c) => {
       // 筛选出该专家相关的禁用时间
       const disableTimes = props.maskEvents?.filter((i) => {
@@ -205,6 +212,8 @@ export const useDayRenderData = () => {
 
       const arr: IMaskEvent[] = [];
 
+      const maxRange = data.timeEnd - data.timeStar;
+
       // 如果专家有禁用时间（暂未处理传递的个时间块有重叠的情况）
       disableTimes.forEach((d) => {
         let startStr = d.startTimeStr;
@@ -215,7 +224,7 @@ export const useDayRenderData = () => {
             `${todayStr} ${`data.timeStar`.padStart(2, "0")}:00:00`
           )
         ) {
-          startStr = `${todayStr} ${`${data.timeStar}`.padStart(2, "0")}:00:00`;
+          startStr = rangeStartStr;
         }
         // 判断事件的结束时间是否在结束时间段之后
         if (
@@ -225,31 +234,33 @@ export const useDayRenderData = () => {
         ) {
           endStr = `${todayStr} ${`${data.timeEnd}`.padStart(2, "0")}:00:00`;
         }
+
+        // 判断一下开始时间和结束时间是否相同
+        if (startStr === endStr) {
+          return;
+        }
+
+        const eventRange =
+          (new Date(endStr).getTime() - new Date(startStr).getTime()) /
+          (1000 * 60 * 60);
+        const startRange =
+          (new Date(startStr).getTime() - new Date(rangeStartStr).getTime()) /
+          (1000 * 60 * 60);
+
+        arr.push({
+          colId: d.colId,
+          startTimeStr: startStr,
+          endTimeStr: endStr,
+          style: {
+            height: `${Math.abs((eventRange / maxRange) * 100)}%`,
+            top: `${Math.abs((startRange / maxRange) * 100)}%`,
+            width: `100%`,
+          },
+        });
       });
+
+      content.push(arr);
     });
-
-    // const { start, end, colId } = getSEInfo(data.temDragData);
-    // // 对比起始点和结束点位置
-
-    // const tempEvent: IEvent = {
-    //   id: "calendar-template",
-    //   colId,
-    //   startTimeStr: start.startTimeStr,
-    //   endTimeStr:
-    //     start.startTimeStr === end.startTimeStr
-    //       ? end.endTimeStr
-    //       : end.startTimeStr,
-    //   title: "新内容",
-    // };
-
-    // const eventRange = +end.id - +start.id + 1;
-    // const startRange = +start.id - 1;
-    // const maxRange = (data.timeEnd - data.timeStar) * (60 / data.timeRange);
-    // tempEvent.style = {
-    //   height: `${Math.abs((eventRange / maxRange) * 100)}%`,
-    //   top: `${Math.abs((startRange / maxRange) * 100)}%`,
-    //   width: `100%`,
-    // };
 
     return {
       range: [],
@@ -258,10 +269,10 @@ export const useDayRenderData = () => {
   }, [
     data.view,
     computed.colItems,
-    data.temDragData,
     data.timeStar,
     data.timeEnd,
     data.timeRange,
+    props.maskEvents,
   ]);
 
   return [bgRender, maskEventRender, dragEventRender] as TDayRender;

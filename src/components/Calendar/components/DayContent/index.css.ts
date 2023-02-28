@@ -109,7 +109,6 @@ export const DayRow = style({
   display: "flex",
   flexDirection: "column",
   flex: 1,
-  background: vars.normalBg,
   borderBottom: `1px solid ${vars.borderColor}`,
 });
 
@@ -139,13 +138,13 @@ export const DragStyle = style({
   zIndex: 100,
   pointerEvents: "none",
   display: "flex",
-  paddingRight: "20px",
+  paddingRight: vars.scrollPadding,
 });
 
 export const DragTimeRowItem = style({
   position: "absolute",
   height: "42px",
-  background: `rgba(255, 243, 177,0.8)`,
+  background: vars.dragRangeBgColor,
 });
 
 export const DragDayRow = style({
@@ -161,4 +160,53 @@ export const DragDayRowItem = style({
   borderTop: `1px solid ${vars.borderColor}`,
   borderRight: `1px solid ${vars.borderColor}`,
   background: `rgba(253, 240, 229,0.8)`,
+});
+
+export const MarkBg = style({
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0,
+  zIndex: -100,
+  display: "flex",
+  paddingRight: vars.scrollPadding,
+  pointerEvents: "none",
+});
+
+export const MarkRow = style({
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  borderBottom: `1px solid rgba(0,0,0,0)`,
+});
+
+export const MarkRowItem = style({
+  position: "absolute",
+  height: "42px",
+  textAlign: "center",
+  borderTop: `1px solid ${vars.borderColor}`,
+  borderRight: `1px solid ${vars.borderColor}`,
+  background: `${vars.disabledBg}`,
+});
+
+export const DayRealBg = style({
+  position: "absolute",
+  display: "flex",
+  paddingRight: vars.scrollPadding,
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0,
+  zIndex: -200,
+  pointerEvents: "none",
+});
+
+export const DayRealBgContent = style({
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  borderBottom: `1px solid rgba(0,0,0,0)`,
+  background: vars.normalBg,
 });

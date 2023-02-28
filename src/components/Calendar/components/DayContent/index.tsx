@@ -16,6 +16,8 @@ import {
 import Background from "./Background";
 import Drag from "./Drag";
 import TopTitle from "./TopTitle";
+import Mask from "./Mask";
+import BackgroundBg from "./BackgroundBg";
 
 export interface IDayContentProps {
   cRef: ICalendarApi;
@@ -32,6 +34,8 @@ export const DayContent = function DayContent_(props: IDayContentProps) {
     <div className={DayBoxStyle}>
       <TopTitle cRef={cRef} />
       <div className={Day}>
+        <BackgroundBg />
+        <Mask cRef={cRef} />
         <Background cRef={cRef} timeEnd={timeEnd} timeStar={timeStar} />
         <Drag cRef={cRef} />
       </div>

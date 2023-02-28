@@ -63,7 +63,7 @@ const Background = function Background_(props: IBackgroundProps) {
         e.stopPropagation();
       }}
     >
-      {/** 背景层 */}
+      {/** 背景线框层 */}
       <div className={TimeRow}>
         {cRef.dayRender?.[0]?.range.map((i) => (
           <div

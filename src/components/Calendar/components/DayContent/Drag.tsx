@@ -27,7 +27,7 @@ export interface IDragProps {
 const Drag = function Drag_(props: IDragProps) {
   const { cRef } = props;
 
-  // console.log("cRef?.dayRender:", cRef?.dayRender);
+  console.log("cRef?.dayRender:", cRef?.dayRender);
 
   return (
     <div className={DragStyle}>

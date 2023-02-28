@@ -23,7 +23,7 @@ export const [themeClass, vars] = createTheme({
   /** @param 白色 */
   writeColor: "#ffffff",
   /** @parma 无排班背景色 */
-  disabledBg: "#EFF4F8",
+  disabledBg: "rgba(239, 244, 248)",
   /** @param 有排班背景色 */
   normalBg: "#FFFFF9",
   /** @param 边框色 */
@@ -34,6 +34,8 @@ export const [themeClass, vars] = createTheme({
   colBgColor: "#EFF3FA",
   /** @param 时间轴字体颜色 */
   rangeColor: "#767676",
+  /** @param 拖拽时时间轴的高亮颜色 */
+  dragRangeBgColor: "rgba(255, 243, 177,0.8)",
 
   /** @param 普通字号 */
   normalFontSize: "14px",

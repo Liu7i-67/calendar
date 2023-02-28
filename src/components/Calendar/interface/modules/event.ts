@@ -14,6 +14,8 @@ export interface IMaskEvent {
   startTimeStr: string;
   /** @param 事件结束时间 YYYY-MM-DD HH:mm:ss */
   endTimeStr: string;
+  /** @param 布局样式 */
+  style?: React.CSSProperties;
 }
 
 export interface IEvent {
