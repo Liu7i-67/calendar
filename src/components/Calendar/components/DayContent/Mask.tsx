@@ -27,8 +27,6 @@ export interface IMaskProps {
 const Mask = function Mask_(props: IMaskProps) {
   const { cRef } = props;
 
-  console.log("cRef.dayRender?.[1]:", cRef.dayRender?.[1]);
-
   return (
     <div
       className={MarkBg}

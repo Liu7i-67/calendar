@@ -27,11 +27,9 @@ export interface IDragProps {
 const Drag = function Drag_(props: IDragProps) {
   const { cRef } = props;
 
-  console.log("cRef?.dayRender:", cRef?.dayRender);
-
   return (
     <div className={DragStyle}>
-      {/** 背景层 */}
+      {/** 拖拽层 */}
       <div className={TimeRow}>
         {cRef?.dayRender?.[2]?.range?.map?.((i) => (
           <div

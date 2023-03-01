@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 17:18:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 11:40:18
+ * @Last Modified time: 2023-03-01 14:29:30
  */
 
 export const classNames = (obj: { [key: string]: boolean | undefined }) => {
@@ -44,3 +44,4 @@ export * from "./modules/constant";
 export * from "./modules/text";
 export * from "./modules/dateHelper";
 export * from "./modules/event";
+export * from "./modules/range";

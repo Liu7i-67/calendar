@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-01-20 16:00:33
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-22 11:45:05
+ * @Last Modified time: 2023-03-01 14:34:10
  */
 import { useState, useMemo } from "react";
 import Calendar, {
@@ -16,6 +16,7 @@ import Calendar, {
   IColItem,
   removeRepeat,
   DH,
+  IMaskEvent,
 } from "components/Calendar";
 import dayjs from "dayjs";
 import "./App.css";
@@ -80,6 +81,14 @@ function App() {
       }
     }
   }, []);
+
+  const maskEvents = useMemo(() => {
+    const _maskEvents: IMaskEvent[] = [];
+    colItems.forEach((c) => {
+      const ableTime =
+        dayData.data.ableTime.filter((i) => i.expertId === c.id) || [];
+    });
+  }, [colItems]);
 
   return (
     <div className="App">

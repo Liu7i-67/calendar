@@ -34,9 +34,13 @@ export const DayContent = function DayContent_(props: IDayContentProps) {
     <div className={DayBoxStyle}>
       <TopTitle cRef={cRef} />
       <div className={Day}>
+        {/** 背景颜色层 */}
         <BackgroundBg />
+        {/** 遮罩层 */}
         <Mask cRef={cRef} />
+        {/** 背景线框层 */}
         <Background cRef={cRef} timeEnd={timeEnd} timeStar={timeStar} />
+        {/** 拖拽层 */}
         <Drag cRef={cRef} />
       </div>
     </div>
