@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-03-01 14:29:17
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-03-01 16:08:25
+ * @Last Modified time: 2023-03-01 16:09:34
  */
 
 interface IDate {
@@ -47,12 +47,12 @@ export const getRangeUnion = (rArr: IDate[]) => {
   const resArr = arr.reduce((p, c, cIndex, arr) => {
     // 如果该元素被填充了，并且还没有生成开始时间
     if (c === 1 && !start) {
-      const range = cIndex + 1;
+      const range = cIndex;
       start = getHMByM(range);
     }
     // 如果该元素没有被填充，并且生成了开始时间
     if (c === 0 && start) {
-      const range = cIndex + 1;
+      const range = cIndex - 1;
       const end = getHMByM(range);
       p.push({ startDate: start, endDate: end });
       start = "";
