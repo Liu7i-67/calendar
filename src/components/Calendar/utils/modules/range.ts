@@ -4,6 +4,7 @@
  * @Last Modified by: liu7i
  * @Last Modified time: 2023-03-01 16:09:34
  */
+import dayjs from "dayjs";
 
 interface IDate {
   /** @param 开始时间 YYYY-MM-DD HH:mm:ss */
@@ -23,8 +24,15 @@ export const getHMByM = (range: number) => {
  * 获取同一天不同时间段的并集
  * @param rArr 同一天的不同时间段
  */
-export const getRangeUnion = (rArr: IDate[]) => {
-  // 把一分钟当成最小单位，构造一个24*60的数组，记录0为空白区间，1为被占用区间
+export const getRangeUnion = (
+  /** @param 同一天的不同时间段 */
+  rArr: IDate[]
+) => {
+  if (!rArr?.length) {
+    return [];
+  }
+
+  // 把一分钟当成最小单位，构造一个24*60 - 1的数组，记录0为空白区间，1为被占用区间
   const arr: (0 | 1)[] = new Array(24 * 60 - 1).fill(0);
 
   rArr.forEach((r) => {
@@ -42,8 +50,10 @@ export const getRangeUnion = (rArr: IDate[]) => {
     arr.splice(sIndex, rNum, ...fArr);
   });
 
-  // 生成用于返回的数组;
+  const dateStr = dayjs(rArr[0].startDate).format("YYYY-MM-DD");
+
   let start = "";
+  // 生成用于返回的数组;
   const resArr = arr.reduce((p, c, cIndex, arr) => {
     // 如果该元素被填充了，并且还没有生成开始时间
     if (c === 1 && !start) {
@@ -54,7 +64,10 @@ export const getRangeUnion = (rArr: IDate[]) => {
     if (c === 0 && start) {
       const range = cIndex - 1;
       const end = getHMByM(range);
-      p.push({ startDate: start, endDate: end });
+      p.push({
+        startDate: `${dateStr} ${start}:00`,
+        endDate: `${dateStr} ${end}:00`,
+      });
       start = "";
     }
     return p;
@@ -62,8 +75,78 @@ export const getRangeUnion = (rArr: IDate[]) => {
 
   if (start) {
     resArr.push({
-      startDate: start,
-      endDate: "23:59",
+      startDate: `${dateStr} ${start}:00`,
+      endDate: `${dateStr} 23:59:00`,
+    });
+  }
+
+  return resArr;
+};
+
+/**
+ * 获取同一天不同时间段的并集的补集
+ * @param rArr 同一天的不同时间段
+ * @param dateStr YYYY-MM-DD 时间用于处理时间段为空但是需要求补集的情况
+ */
+export const getRangeComplementarySet = (
+  /** @param 同一天的不同时间段 */
+  rArr: IDate[],
+  /** @param YYYY-MM-DD 时间用于处理时间段为空但是需要求补集的情况 */
+  dateStr: string = ""
+) => {
+  if (!rArr?.length) {
+    return [
+      {
+        startDate: `${dateStr} 00:00:00`,
+        endDate: `${dateStr} 23:59:00`,
+      },
+    ];
+  }
+
+  // 把一分钟当成最小单位，构造一个24*60 - 1的数组，记录0为空白区间，1为被占用区间
+  const arr: (0 | 1)[] = new Array(24 * 60 - 1).fill(0);
+
+  rArr.forEach((r) => {
+    // 找到开始时间的index
+    const sDate = new Date(r.startDate);
+    const sIndex = sDate.getHours() * 60 + sDate.getMinutes();
+    // 找到结束时间的index
+    const eDate = new Date(r.endDate);
+    const eIndex = eDate.getHours() * 60 + eDate.getMinutes();
+    // 需要填充的位数
+    const rNum = eIndex - sIndex + 1;
+    // 用于填充的数据
+    const fArr = new Array(rNum).fill(1);
+    // 填充到数组中
+    arr.splice(sIndex, rNum, ...fArr);
+  });
+
+  // 如果是求补集
+  let start = "";
+  // 生成用于返回的数组;
+  const resArr = arr.reduce((p, c, cIndex, arr) => {
+    // 如果该元素被填充了，并且还没有生成开始时间
+    if (c === 0 && !start) {
+      const range = cIndex === 0 ? 0 : cIndex - 1;
+      start = getHMByM(range);
+    }
+    // 如果该元素没有被填充，并且生成了开始时间
+    if (c === 1 && start) {
+      const range = cIndex;
+      const end = getHMByM(range);
+      p.push({
+        startDate: `${dateStr} ${start}:00`,
+        endDate: `${dateStr} ${end}:00`,
+      });
+      start = "";
+    }
+    return p;
+  }, [] as IDate[]);
+
+  if (start) {
+    resArr.push({
+      startDate: `${dateStr} ${start}:00`,
+      endDate: `${dateStr} 23:59:00`,
     });
   }
 

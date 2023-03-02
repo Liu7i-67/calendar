@@ -193,6 +193,11 @@ export const useDayRenderData = () => {
       2,
       "0"
     )}:00:00`;
+    /** @param 今天结束时间的str */
+    const rangeEndStr = `${todayStr} ${`${data.timeEnd}`.padStart(
+      2,
+      "0"
+    )}:00:00`;
 
     computed.colItems.forEach((c) => {
       // 筛选出该专家相关的禁用时间
@@ -219,20 +224,12 @@ export const useDayRenderData = () => {
         let startStr = d.startTimeStr;
         let endStr = d.endTimeStr;
         // 判断事件的开始时间是否在开始时间段之前
-        if (
-          dayjs(d.startTimeStr).isBefore(
-            `${todayStr} ${`data.timeStar`.padStart(2, "0")}:00:00`
-          )
-        ) {
+        if (dayjs(d.startTimeStr).isBefore(rangeStartStr)) {
           startStr = rangeStartStr;
         }
         // 判断事件的结束时间是否在结束时间段之后
-        if (
-          dayjs(d.endTimeStr).isAfter(
-            `${todayStr} ${`${data.timeEnd}`.padStart(2, "0")}:00:00`
-          )
-        ) {
-          endStr = `${todayStr} ${`${data.timeEnd}`.padStart(2, "0")}:00:00`;
+        if (dayjs(d.endTimeStr).isAfter(rangeEndStr)) {
+          endStr = rangeEndStr;
         }
 
         // 判断一下开始时间和结束时间是否相同
@@ -267,6 +264,7 @@ export const useDayRenderData = () => {
       content,
     } as IDayLayerMask;
   }, [
+    data.date,
     data.view,
     computed.colItems,
     data.timeStar,

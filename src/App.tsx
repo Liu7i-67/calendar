@@ -17,6 +17,7 @@ import Calendar, {
   removeRepeat,
   DH,
   IMaskEvent,
+  getRangeComplementarySet,
 } from "components/Calendar";
 import dayjs from "dayjs";
 import "./App.css";
@@ -84,10 +85,22 @@ function App() {
 
   const maskEvents = useMemo(() => {
     const _maskEvents: IMaskEvent[] = [];
+
+    const dateStr = dayjs().format("YYYY-MM-DD");
     colItems.forEach((c) => {
       const ableTime =
         dayData.data.ableTime.filter((i) => i.expertId === c.id) || [];
+
+      const range = getRangeComplementarySet(ableTime, dateStr);
+      _maskEvents.push(
+        ...((range.map((i) => ({
+          startTimeStr: i?.startDate,
+          endTimeStr: i?.endDate,
+          colId: c.id,
+        })) as IMaskEvent[]) || [])
+      );
     });
+    return _maskEvents;
   }, [colItems]);
 
   return (
@@ -95,15 +108,9 @@ function App() {
       <ErrorBoundary>
         <Calendar
           events={events}
-          maskEvents={[
-            {
-              colId: "4ee3916160b959f119e287fd08ca3fd3",
-              startTimeStr: "2023-02-28 9:00",
-              endTimeStr: "2023-02-28 10:10",
-            },
-          ]}
+          maskEvents={maskEvents}
           colItems={colItems}
-          timeStar={8}
+          timeStar={9}
           timeEnd={22}
           timeRange={15}
           onViewChange={(v) => {
