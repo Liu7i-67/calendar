@@ -152,3 +152,24 @@ export const getRangeComplementarySet = (
 
   return resArr;
 };
+
+type TRangeItem = string | number | Date;
+
+/** @function 判断两个时间段是否有交集 */
+export const checkRangeBeMixed = (
+  range: { s: TRangeItem; e: TRangeItem },
+  rangeB: { s: TRangeItem; e: TRangeItem }
+) => {
+  const [As, Ae] = [new Date(range.s).getTime(), new Date(range.e).getTime()];
+  const [Bs, Be] = [new Date(rangeB.s).getTime(), new Date(rangeB.e).getTime()];
+
+  if (Ae <= Bs) {
+    return false;
+  }
+
+  if (Be <= As) {
+    return false;
+  }
+
+  return true;
+};

@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:53:58
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-16 16:42:57
+ * @Last Modified time: 2023-03-08 10:12:34
  */
 import React from "react";
 import type { ICalendarApi } from "components/Calendar";
@@ -18,6 +18,7 @@ import Drag from "./Drag";
 import TopTitle from "./TopTitle";
 import Mask from "./Mask";
 import BackgroundBg from "./BackgroundBg";
+import Events from "./Events";
 
 export interface IDayContentProps {
   cRef: ICalendarApi;
@@ -40,6 +41,8 @@ export const DayContent = function DayContent_(props: IDayContentProps) {
         <Mask cRef={cRef} />
         {/** 背景线框层 */}
         <Background cRef={cRef} timeEnd={timeEnd} timeStar={timeStar} />
+        {/**  事件层 */}
+        <Events cRef={cRef} />
         {/** 拖拽层 */}
         <Drag cRef={cRef} />
       </div>

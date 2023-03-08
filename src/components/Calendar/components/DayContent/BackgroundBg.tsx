@@ -5,8 +5,6 @@
  * @Last Modified time: 2023-02-15 15:28:38
  */
 
-import React, { useState, useEffect } from "react";
-import type { ICalendarApi } from "components/Calendar";
 import { DayRealBgContent, TimeRow, DayRealBg } from "./index.css";
 
 const BackgroundBg = function BackgroundBg_() {

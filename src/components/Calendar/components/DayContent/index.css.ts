@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:54:08
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-17 11:16:38
+ * @Last Modified time: 2023-03-08 11:14:28
  */
 import { style } from "@vanilla-extract/css";
 import { vars } from "../index.css";
@@ -209,4 +209,45 @@ export const DayRealBgContent = style({
   flex: 1,
   borderBottom: `1px solid rgba(0,0,0,0)`,
   background: vars.normalBg,
+});
+
+export const EventsBg = style({
+  position: "absolute",
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0,
+  zIndex: 50,
+  display: "flex",
+  paddingRight: vars.scrollPadding,
+  pointerEvents: "none",
+});
+
+export const EventsTimeRow = style({
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  width: vars.rangeLineWidth,
+  borderBottom: `1px solid rgba(0,0,0,0)`,
+});
+
+export const EventMarkRow = style({
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  borderBottom: `1px solid rgba(0,0,0,0)`,
+});
+
+export const EventRowItem = style({
+  position: "absolute",
+  height: "42px",
+  textAlign: "center",
+  borderTop: `1px solid ${vars.borderColor}`,
+  borderRight: `1px solid ${vars.borderColor}`,
+  background: `${vars.disabledBg}`,
+  overflow: "hidden",
+  cursor: "pointer",
+  pointerEvents: "initial",
+  wordBreak: "break-all",
 });

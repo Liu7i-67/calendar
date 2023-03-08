@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 18:03:12
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-02-22 14:39:42
+ * @Last Modified time: 2023-03-08 11:25:51
  */
 
 import { useMemo } from "react";
@@ -14,10 +14,13 @@ import type {
   IMaskEvent,
   IDayLayerDrag,
   IDayLayerMask,
+  IDayEventLayerMask,
+  IEventMore,
+  IEventContent,
 } from "components/Calendar/interface";
 import { EView } from "components/Calendar/interface";
 import { RootStore } from "components/Calendar/store";
-import { DH, getSEInfo } from "components/Calendar/utils";
+import { DH, getSEInfo, checkRangeBeMixed } from "components/Calendar/utils";
 import dayjs from "dayjs";
 
 export const useDayRenderData = () => {
@@ -25,8 +28,8 @@ export const useDayRenderData = () => {
   const props = RootStore.useSelector((r) => r.props);
   const computed = RootStore.useSelector((r) => r.computed);
 
+  // 生成背景层
   const bgRender = useMemo(() => {
-    // 生成背景
     const arr: IEventCol[] = [];
     const rangeArr: IEventCol[] = [];
 
@@ -101,8 +104,8 @@ export const useDayRenderData = () => {
     computed.colItems,
   ]);
 
+  // 生成拖动层
   const dragEventRender = useMemo(() => {
-    // 生成背景
     const rangeArr: IEvent[] = [];
 
     if (![EView.DAY, EView.WEEK].includes(data.view.type)) {
@@ -167,6 +170,7 @@ export const useDayRenderData = () => {
     data.timeRange,
   ]);
 
+  // 背景事件层
   const maskEventRender = useMemo(() => {
     // 生成遮罩背景
     if (![EView.DAY, EView.WEEK].includes(data.view.type)) {
@@ -273,5 +277,203 @@ export const useDayRenderData = () => {
     props.maskEvents,
   ]);
 
-  return [bgRender, maskEventRender, dragEventRender] as TDayRender;
+  // 事件层
+  const eventRender = useMemo(() => {
+    // 生成遮罩背景
+    if (![EView.DAY, EView.WEEK].includes(data.view.type)) {
+      return {
+        range: [],
+        content: [],
+      } as IDayEventLayerMask;
+    }
+
+    // 如果没有遮罩事件
+    if (!props.events?.length || !computed.colItems?.length) {
+      return {
+        range: [],
+        content: [],
+      } as IDayEventLayerMask;
+    }
+
+    const content: IEventContent[] = [];
+
+    const todayStr = DH(data.date).format("YYYY-MM-DD");
+
+    // 筛选出当天的事件
+    const todayEvents =
+      props.events?.filter(
+        (i) => DH(i.startTimeStr).format("YYYY-MM-DD") === todayStr
+      ) || [];
+    // 按当前可视专家进行分组
+    const colEvents: {
+      [key: string]: IEvent[];
+    } = {};
+
+    const colIds = new Set(computed.colItems.map((c) => c.id) || []);
+
+    computed.colItems.forEach((c) => {
+      colEvents[c.id] = [];
+    });
+
+    for (let i = 0; i < todayEvents?.length - 1; i++) {
+      if (colIds.has(todayEvents[i].colId)) {
+        colEvents[todayEvents[i].colId].push({ ...todayEvents[i] });
+      }
+    }
+    // 计算出当前分辨率以及展示的专家数可以同时展示的最大预约数
+    const maxAppoint = 6;
+
+    // 生成多个时间段集合
+    const length = (data.timeEnd - data.timeStar) * (60 / data.timeRange);
+    const range = data.timeRange * 60 * 1000;
+    const start = new Date(
+      `${todayStr} ${`${data.timeStar}`.padStart(2, "0")}:00:00`
+    ).getTime();
+    const rangeArr: IEventMore[] = [];
+    for (let i = 0; i < length; i++) {
+      const time = start + range * i;
+      rangeArr.push({
+        startTimeStr: dayjs(time).format("YYYY-MM-DD HH:mm:ss"),
+        endTimeStr: dayjs(time + range).format("YYYY-MM-DD HH:mm:ss"),
+        id: time + "",
+        colId: "",
+        moreEvent: [],
+        allEvent: [],
+        showEvent: [],
+        index: 1,
+      });
+    }
+
+    const maxMin = (data.timeEnd - data.timeStar) * 60;
+
+    computed.colItems.forEach((c) => {
+      const colEvent = (colEvents[c.id] || []).slice();
+      // 如果这个客户没有预约信息
+      if (!colEvent.length) {
+        content.push({ allEvent: [], moreInfo: [], showEvent: [] });
+        return;
+      }
+
+      const box: IEvent[][] = [];
+
+      colEvent.forEach((e) => {
+        if (box.length === 0) {
+          e.styleInfo = {
+            left: 0,
+          };
+          box.push([e]);
+          return;
+        }
+        const index = box.findIndex(
+          (eArr) =>
+            !eArr.every(
+              (i) =>
+                !checkRangeBeMixed(
+                  { s: e.startTimeStr, e: e.endTimeStr },
+                  { s: i.startTimeStr, e: i.endTimeStr }
+                )
+            )
+        );
+
+        if (index) {
+          box[index].push(e);
+          e.styleInfo = {
+            left: index,
+          };
+          return;
+        }
+
+        e.styleInfo = {
+          left: box.length,
+        };
+
+        box.push([e]);
+      });
+
+      // 克隆一份
+      const rangeA = rangeArr.slice();
+      rangeA.forEach((r) => {
+        r.allEvent = colEvent.filter((i) =>
+          checkRangeBeMixed(
+            { s: r.startTimeStr, e: r.endTimeStr },
+            { s: i.startTimeStr, e: i.endTimeStr }
+          )
+        );
+        const showEvent: IEvent[] = [];
+        const moreEvent: IEvent[] = [];
+        r.allEvent.forEach((e) => {
+          if ((e.styleInfo?.left ?? 0) + 1 > maxAppoint) {
+            moreEvent.push(e);
+            return;
+          }
+          showEvent.push(e);
+        });
+        r.moreEvent = moreEvent;
+        r.showEvent = showEvent;
+      });
+
+      const resColEvent: IEvent[] = [];
+
+      colEvent.forEach((e) => {
+        const block = Math.max(...rangeA.map((r) => r.showEvent.length));
+
+        const eMin =
+          (+dayjs(e.startTimeStr).format("HH") - data.timeStar) * 60 +
+          +dayjs(e.startTimeStr).format("mm");
+        const eRangeMin =
+          +dayjs(e.endTimeStr).format("HH") * 60 +
+          +dayjs(e.endTimeStr).format("mm") -
+          (+dayjs(e.startTimeStr).format("HH") * 60 +
+            +dayjs(e.startTimeStr).format("mm"));
+
+        e.styleInfo = {
+          ...e.styleInfo,
+          block,
+        };
+
+        const left = e.styleInfo.left as number;
+
+        e.style = {
+          width: `calc(${(1 / Math.min(block, maxAppoint)) * 100}% - 4px)`,
+          top: `${(eMin / maxMin) * 100}%`,
+          left: `${(left / Math.min(box.length, maxAppoint)) * 100}%`,
+          height: `calc(${(eRangeMin / maxMin) * 100}% - 2px)`,
+        };
+
+        if (left <= maxAppoint - 1) {
+          resColEvent.push(e);
+        }
+      });
+
+      if (!colEvent?.length) {
+        return;
+      }
+
+      content.push({
+        allEvent: colEvent,
+        moreInfo: rangeA,
+        showEvent: resColEvent,
+      });
+    });
+
+    return {
+      range: [],
+      content,
+    };
+  }, [
+    props.events,
+    computed.colItems,
+    data.view,
+    data.date,
+    data.timeEnd,
+    data.timeStar,
+    data.timeRange,
+  ]);
+
+  return [
+    bgRender,
+    maskEventRender,
+    eventRender,
+    dragEventRender,
+  ] as TDayRender;
 };

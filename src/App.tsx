@@ -18,6 +18,7 @@ import Calendar, {
   DH,
   IMaskEvent,
   getRangeComplementarySet,
+  IEvent,
 } from "components/Calendar";
 import dayjs from "dayjs";
 import "./App.css";
@@ -83,6 +84,19 @@ function App() {
     }
   }, []);
 
+  const event = useMemo(() => {
+    const a: IEvent[] = dayData.data.event.map((i) => {
+      return {
+        ...i,
+        colId: i.doctor_id,
+        startTimeStr: i.start_date,
+        endTimeStr: i.end_date,
+        title: i.customerName,
+      } as IEvent;
+    });
+    return a;
+  }, []);
+
   const maskEvents = useMemo(() => {
     const _maskEvents: IMaskEvent[] = [];
 
@@ -103,15 +117,19 @@ function App() {
     return _maskEvents;
   }, [colItems]);
 
+  const timeStar = 9;
+  const timeEnd = 22;
+
   return (
     <div className="App">
       <ErrorBoundary>
         <Calendar
-          events={events}
+          events={event}
           maskEvents={maskEvents}
           colItems={colItems}
-          timeStar={9}
-          timeEnd={22}
+          timeStar={timeStar}
+          timeEnd={timeEnd}
+          defaultDate={new Date("2023-03-07")}
           timeRange={15}
           onViewChange={(v) => {
             setState(v);
@@ -126,7 +144,11 @@ function App() {
                 {dayjs(ref.date).format("YYYY-MM-DD")}
                 <ToolBar cRef={ref} rightExtra={rightExtra} />
                 {ref.view.type === EView.DAY && (
-                  <DayContent cRef={ref} timeStar={8} timeEnd={22} />
+                  <DayContent
+                    cRef={ref}
+                    timeStar={timeStar}
+                    timeEnd={timeEnd}
+                  />
                 )}
                 <div>当前展示的视图为：{ref.view.title}视图</div>
               </div>
