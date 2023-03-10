@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-03-10 14:22:50
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-03-10 14:34:39
+ * @Last Modified time: 2023-03-10 14:41:22
  */
 import React from "react";
 
@@ -11,7 +11,7 @@ export interface IPaddingPromise {
   cancel: () => boolean;
 }
 
-export const cancellablePromise = (promise: Promise<any>) => {
+export const cancellablePromise = <T>(promise: Promise<T>) => {
   let isCanceled = false;
 
   const wrappedPromise = new Promise((resolve, reject) => {
