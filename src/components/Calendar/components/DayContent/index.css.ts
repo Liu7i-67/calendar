@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 10:54:08
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-03-08 11:14:28
+ * @Last Modified time: 2023-03-08 16:39:14
  */
 import { style } from "@vanilla-extract/css";
 import { vars } from "../index.css";
@@ -243,11 +243,73 @@ export const EventRowItem = style({
   position: "absolute",
   height: "42px",
   textAlign: "center",
-  borderTop: `1px solid ${vars.borderColor}`,
-  borderRight: `1px solid ${vars.borderColor}`,
   background: `${vars.disabledBg}`,
   overflow: "hidden",
   cursor: "pointer",
-  pointerEvents: "initial",
   wordBreak: "break-all",
+  pointerEvents: "initial",
+  selectors: {
+    ["&.transparent"]: {
+      pointerEvents: "none",
+    },
+  },
+});
+
+export const EventRowMore = style({
+  position: "absolute",
+  height: "42px",
+  textAlign: "center",
+  cursor: "pointer",
+  wordBreak: "break-all",
+  width: "35px",
+  right: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  pointerEvents: "initial",
+  selectors: {
+    ["&.transparent"]: {
+      pointerEvents: "none",
+    },
+  },
+});
+
+export const EventRowMoreBox = style({
+  position: "absolute",
+  top: 0,
+  right: "12px",
+  width: "100px",
+  maxHeight: "150px",
+  zIndex: 300,
+  background: "#fff",
+  textAlign: "left",
+  display: "none",
+  boxShadow: "-2px 2px 4px gray",
+  padding: "8px",
+  overflowY: "auto",
+  selectors: {
+    [`${EventRowMore}:hover &`]: {
+      display: "block",
+    },
+  },
+});
+
+export const EventRowMoreItem = style({
+  ":hover": {
+    background: "lightgray",
+  },
+});
+
+export const EventRowMoreContent = style({
+  background: "rgba(0,0,0,0.3)",
+  padding: "8px 4px 6px 4px",
+  borderRadius: "2px",
+});
+
+export const EventRowMoreContentDot = style({
+  width: "4px",
+  height: "4px",
+  borderRadius: "50%",
+  background: "#fff",
+  marginBottom: "2px",
 });

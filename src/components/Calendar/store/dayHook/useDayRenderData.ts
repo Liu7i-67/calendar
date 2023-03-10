@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-14 18:03:12
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-03-08 11:25:51
+ * @Last Modified time: 2023-03-08 16:33:01
  */
 
 import { useMemo } from "react";
@@ -120,6 +120,7 @@ export const useDayRenderData = () => {
       return {
         range: rangeArr,
         content: [],
+        dragging: false,
       } as IDayLayerDrag;
     }
 
@@ -160,6 +161,7 @@ export const useDayRenderData = () => {
     return {
       range: rangeArr,
       content,
+      dragging: true,
     } as IDayLayerDrag;
   }, [
     data.view,
@@ -321,7 +323,7 @@ export const useDayRenderData = () => {
       }
     }
     // 计算出当前分辨率以及展示的专家数可以同时展示的最大预约数
-    const maxAppoint = 6;
+    const maxAppoint = props.maxCellEventNumber || 6;
 
     // 生成多个时间段集合
     const length = (data.timeEnd - data.timeStar) * (60 / data.timeRange);
@@ -364,18 +366,17 @@ export const useDayRenderData = () => {
           box.push([e]);
           return;
         }
-        const index = box.findIndex(
-          (eArr) =>
-            !eArr.every(
-              (i) =>
-                !checkRangeBeMixed(
-                  { s: e.startTimeStr, e: e.endTimeStr },
-                  { s: i.startTimeStr, e: i.endTimeStr }
-                )
-            )
+        const index = box.findIndex((eArr) =>
+          eArr.every(
+            (i) =>
+              !checkRangeBeMixed(
+                { s: e.startTimeStr, e: e.endTimeStr },
+                { s: i.startTimeStr, e: i.endTimeStr }
+              )
+          )
         );
 
-        if (index) {
+        if (index > -1) {
           box[index].push(e);
           e.styleInfo = {
             left: index,
@@ -393,6 +394,9 @@ export const useDayRenderData = () => {
       // 克隆一份
       const rangeA = rangeArr.slice();
       rangeA.forEach((r) => {
+        const eMin =
+          (+dayjs(r.startTimeStr).format("HH") - data.timeStar) * 60 +
+          +dayjs(r.startTimeStr).format("mm");
         r.allEvent = colEvent.filter((i) =>
           checkRangeBeMixed(
             { s: r.startTimeStr, e: r.endTimeStr },
@@ -410,12 +414,27 @@ export const useDayRenderData = () => {
         });
         r.moreEvent = moreEvent;
         r.showEvent = showEvent;
+
+        if (r.moreEvent.length) {
+          r.showEvent.forEach((e) => {
+            e.showMore = true;
+          });
+        }
+
+        r.style = {
+          top: `${(eMin / maxMin) * 100}%`,
+          height: `${(data.timeRange / maxMin) * 100}%`,
+        };
       });
 
       const resColEvent: IEvent[] = [];
 
       colEvent.forEach((e) => {
-        const block = Math.max(...rangeA.map((r) => r.showEvent.length));
+        const block = Math.max(
+          ...rangeA
+            .filter((p) => p.allEvent.find((i) => i.id === e.id))
+            .map((r) => r.showEvent.length)
+        );
 
         const eMin =
           (+dayjs(e.startTimeStr).format("HH") - data.timeStar) * 60 +
@@ -433,10 +452,17 @@ export const useDayRenderData = () => {
 
         const left = e.styleInfo.left as number;
 
+        // 是否需要展示更多标记
+        const showMore = e.showMore;
+
         e.style = {
-          width: `calc(${(1 / Math.min(block, maxAppoint)) * 100}% - 4px)`,
+          width: showMore
+            ? `calc(${1 / maxAppoint} * (100% - 12px) - 4px)`
+            : `calc(${(1 / Math.min(block, maxAppoint)) * 100}% - 4px)`,
           top: `${(eMin / maxMin) * 100}%`,
-          left: `${(left / Math.min(box.length, maxAppoint)) * 100}%`,
+          left: showMore
+            ? `calc(${left / maxAppoint} * (100% - 12px))`
+            : `${(left / Math.min(box.length, maxAppoint)) * 100}%`,
           height: `calc(${(eRangeMin / maxMin) * 100}% - 2px)`,
         };
 
@@ -449,9 +475,27 @@ export const useDayRenderData = () => {
         return;
       }
 
+      const moreInfoRange = rangeA.filter((r) => r.moreEvent.length);
+
+      const moreInfo = moreInfoRange.reduce((preVal, current, currentIndex) => {
+        if (currentIndex === 0) {
+          preVal.push(current);
+          return preVal;
+        }
+
+        if (
+          JSON.stringify(preVal.slice(-1)[0].moreEvent) !==
+          JSON.stringify(current.moreEvent)
+        ) {
+          preVal.push(current);
+        }
+
+        return preVal;
+      }, [] as IEventMore[]);
+
       content.push({
         allEvent: colEvent,
-        moreInfo: rangeA,
+        moreInfo,
         showEvent: resColEvent,
       });
     });

@@ -137,6 +137,7 @@ function App() {
           onEventAdd={(c) => {
             console.log("新建预约:", c);
           }}
+          maxCellEventNumber={5}
         >
           {(ref) => {
             return (

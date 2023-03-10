@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-02-13 18:09:22
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-03-08 11:19:17
+ * @Last Modified time: 2023-03-08 16:22:48
  */
 
 import React from "react";
@@ -39,6 +39,8 @@ export interface IEvent {
   style?: React.CSSProperties;
   /** @param 事件的布局辅助信息-用于用户自定义样式 */
   styleInfo?: IStyleInfo;
+  /** @param 该行是否展示更多 true为是 */
+  showMore?: boolean;
   [key: string]: any;
 }
 
@@ -107,6 +109,8 @@ export interface IDayLayerDrag {
   range: IEvent[];
   /** @param 内容信息 */
   content: IEvent[][];
+  /** @param 是否有拖拽中的事件 true为是 */
+  dragging?: boolean;
 }
 
 export interface IDayLayerMask {

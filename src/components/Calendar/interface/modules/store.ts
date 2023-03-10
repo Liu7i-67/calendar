@@ -22,6 +22,8 @@ export interface IPropsInit {
   maxColNum: number;
   /** @param 移动端touch灵敏度，单位毫秒 默认为300 */
   touchInterval: number;
+  /** @param 最大同时展示数 超出这个数量会展示更多icon，将多出的内容折叠起来 默认为5 */
+  maxCellEventNumber?: number;
 }
 
 export interface IStore extends IPropsInit {
