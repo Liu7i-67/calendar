@@ -6,9 +6,15 @@
  */
 
 import React from "react";
-import type { IView, TDayRender, IColItem, IEventCol, EOptionType } from "..";
+import type {
+  IView,
+  TDayRender,
+  IColItem,
+  IEventCol,
+  ICalendarProps,
+} from "..";
 
-export interface ICalendarApi {
+export interface ICalendarApi extends ICalendarProps {
   /** @param 日历当前时间 */
   date: Date;
   /** @param 展示的视图信息 */

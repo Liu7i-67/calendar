@@ -5,7 +5,7 @@
  * @Last Modified time: 2023-02-15 13:55:06
  */
 
-import type { IView, IDragEvent } from "../index";
+import type { IView, IDragEvent, IEvent } from "../index";
 
 export interface IPropsInit {
   /** @param 开始时间（日-周模式）0-24 */
@@ -24,6 +24,10 @@ export interface IPropsInit {
   touchInterval: number;
   /** @param 最大同时展示数 超出这个数量会展示更多icon，将多出的内容折叠起来 默认为5 */
   maxCellEventNumber?: number;
+  /** @function 事件的单击事件 */
+  eventClick?: (event: IEvent) => void;
+  /** @function 事件的双击事件 */
+  eventDoubleClick?: (event: IEvent) => void;
 }
 
 export interface IStore extends IPropsInit {

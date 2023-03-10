@@ -2,7 +2,7 @@
  * @Author: liu7i
  * @Date: 2023-03-08 10:07:55
  * @Last Modified by: liu7i
- * @Last Modified time: 2023-03-08 16:40:01
+ * @Last Modified time: 2023-03-10 14:34:56
  */
 
 import {
@@ -18,6 +18,7 @@ import {
 } from "./index.css";
 import type { ICalendarApi } from "components/Calendar";
 import { classNames } from "../../utils";
+import { useClickPreventionOnDoubleClick } from "hooks/useClickPreventionOnDoubleClick";
 
 export interface IBackgroundProps {
   cRef: ICalendarApi;
@@ -25,6 +26,10 @@ export interface IBackgroundProps {
 
 const Events = function Events_(props: IBackgroundProps) {
   const { cRef } = props;
+  const [click, doubleClick] = useClickPreventionOnDoubleClick(
+    cRef.eventClick as Function,
+    cRef.eventDoubleClick as Function
+  );
 
   return (
     <div className={EventsBg}>
@@ -40,6 +45,8 @@ const Events = function Events_(props: IBackgroundProps) {
               })}
               key={`${cIndex}-${index}`}
               style={i.style}
+              onClick={() => click?.(i)}
+              onDoubleClick={() => doubleClick?.(i)}
             >
               {i.title}
             </div>

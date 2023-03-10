@@ -16,6 +16,7 @@ const Calendar = function Calendar_({
   children: (ref: ICalendarApi) => React.ReactNode;
 }) {
   const data = RootStore.useSelector((root) => root.data);
+  const props = RootStore.useSelector((root) => root.props);
   const methods = RootStore.useSelector((root) => root.methods);
   const computed = RootStore.useSelector((root) => root.computed);
   const dayRender = useDayRenderData();
@@ -23,6 +24,7 @@ const Calendar = function Calendar_({
   return (
     <div>
       {children?.({
+        ...props,
         date: data.date,
         views: data.views,
         view: data.view,

@@ -137,6 +137,12 @@ function App() {
           onEventAdd={(c) => {
             console.log("新建预约:", c);
           }}
+          eventClick={(e) => {
+            console.log("打开详情：", e);
+          }}
+          eventDoubleClick={(e) => {
+            console.log("打开编辑:", e);
+          }}
           maxCellEventNumber={5}
         >
           {(ref) => {
