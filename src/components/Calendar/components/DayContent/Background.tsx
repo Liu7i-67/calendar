@@ -36,12 +36,19 @@ const Background = function Background_(props: IBackgroundProps) {
     const range = (timeEnd - timeStar) * 60;
     const now = (dayjs().get("hour") - timeStar) * 60 + dayjs().get("minute");
     const top = `${(now / range) * 100}%`;
+
+    let display = "block";
+
+    if (
+      dayjs().format("YYYY-MM-DD") !== dayjs(cRef.date).format("YYYY-MM-DD")
+    ) {
+      display = "none";
+    }
+
     setLineStyle({
       top,
-      display:
-        dayjs().format("YYYY-MM-DD") === dayjs(cRef.date).format("YYYY-MM-DD")
-          ? "block"
-          : "none",
+      display,
+      zIndex: 999,
     });
   }, [timeStar, timeEnd, cRef.date]);
 
@@ -138,7 +145,15 @@ const Background = function Background_(props: IBackgroundProps) {
           ))}
         </div>
       ))}
-      <div className={NowLine} style={lineStyle}></div>
+      <div
+        className={NowLine}
+        style={{
+          ...lineStyle,
+          display: cRef.dayRender[3].content.length
+            ? "none"
+            : lineStyle.display,
+        }}
+      ></div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ import {
   EOptionTypeWeb,
   EOptionTypeApp,
 } from "components/Calendar/interface";
-import { getSEInfo, DH } from "components/Calendar/utils";
+import { getSEInfo, getEventMaxStartStr } from "components/Calendar/utils";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
 
@@ -216,6 +216,7 @@ export const useDayMethod = (_props: ISubRootProps) => {
           {
             setData((o) => {
               if (!data.eventDrag.event || !c) {
+                o.eventDrag = {};
                 return;
               }
               o.eventDrag.target = {
@@ -226,19 +227,14 @@ export const useDayMethod = (_props: ISubRootProps) => {
                 time: Date.now(),
               };
 
-              const todayEnd = dayjs(data.date).format(
-                `YYYY-MM-DD ${`${data.timeEnd}`.padStart(2, "0")}:00:00`
-              );
+              // 计算一下事件可拖动的最晚开始时间
 
-              // 计算一下事件可拖动的最晚开始事件
-              const range =
-                new Date(data.eventDrag.event.endTimeStr).getTime() -
-                new Date(data.eventDrag.event.startTimeStr).getTime();
-              const maxStart = new Date(todayEnd).getTime() - range;
-              let startTimeStr =
-                new Date(c.startTimeStr).getTime() <= maxStart
-                  ? c.startTimeStr
-                  : dayjs(maxStart).format("YYYY-MM-DD HH:mm:ss");
+              const startTimeStr = getEventMaxStartStr({
+                et: data.eventDrag.event,
+                date: data.date,
+                timeEnd: data.timeEnd,
+                startTimeStr: c.startTimeStr,
+              });
 
               props.onEventDrag?.({
                 colId: c.colId,

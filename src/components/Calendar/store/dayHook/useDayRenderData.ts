@@ -20,7 +20,12 @@ import type {
 } from "components/Calendar/interface";
 import { EView } from "components/Calendar/interface";
 import { RootStore } from "components/Calendar/store";
-import { DH, getSEInfo, checkRangeBeMixed } from "components/Calendar/utils";
+import {
+  DH,
+  getSEInfo,
+  checkRangeBeMixed,
+  getEventMaxStartStr,
+} from "components/Calendar/utils";
 import dayjs from "dayjs";
 
 export const useDayRenderData = () => {
@@ -115,12 +120,58 @@ export const useDayRenderData = () => {
       } as IDayLayerDrag;
     }
 
+    // 如果有事件拖拽
+    const de = data.eventDrag.event;
+    if (de) {
+      const dragEvent = JSON.parse(JSON.stringify(de));
+
+      if (data.eventDrag.target) {
+        dragEvent.colId = data.eventDrag.target.col.colId;
+        dragEvent.startTimeStr = getEventMaxStartStr({
+          et: dragEvent,
+          date: data.date,
+          timeEnd: data.timeEnd,
+          startTimeStr: data.eventDrag.target.col.startTimeStr,
+        });
+
+        const maxMin = (data.timeEnd - data.timeStar) * 60;
+        const eMin =
+          (+dayjs(dragEvent.startTimeStr).format("HH") - data.timeStar) * 60 +
+          +dayjs(dragEvent.startTimeStr).format("mm");
+        dragEvent.style.top = `${(eMin / maxMin) * 100}%`;
+      }
+
+      rangeArr.push({
+        ...dragEvent,
+        style: {
+          ...dragEvent.style,
+          width: "100%",
+          left: 0,
+        },
+        id: "calendar-template-range",
+      });
+
+      const content: IEventCol[][] = [];
+      if (computed.colItems?.length) {
+        computed.colItems.forEach((i) => {
+          content.push(i.id === dragEvent.colId ? [dragEvent] : []);
+        });
+      } else {
+        content.push([dragEvent]);
+      }
+      return {
+        range: rangeArr,
+        content: content,
+        dragging: true,
+      } as IDayLayerDrag;
+    }
+
     // 拖拽信息不足
     if (data.temDragData.length !== 2) {
       return {
         range: rangeArr,
         content: [],
-        dragging: false,
+        dragging: data.eventDrag.event ? true : false,
       } as IDayLayerDrag;
     }
 
@@ -170,6 +221,8 @@ export const useDayRenderData = () => {
     data.timeStar,
     data.timeEnd,
     data.timeRange,
+    data.eventDrag,
+    data.date,
   ]);
 
   // 背景事件层
@@ -463,8 +516,12 @@ export const useDayRenderData = () => {
           left: showMore
             ? `calc(${left / maxAppoint} * (100% - 12px))`
             : `${(left / Math.min(box.length, maxAppoint)) * 100}%`,
-          height: `calc(${(eRangeMin / maxMin) * 100}% - 2px)`,
+          height: `calc(${(eRangeMin / maxMin) * 100}%)`,
         };
+
+        if (e.id === data.eventDrag.event?.id) {
+          e.style.opacity = 0.5;
+        }
 
         if (left <= maxAppoint - 1) {
           resColEvent.push(e);
@@ -512,6 +569,7 @@ export const useDayRenderData = () => {
     data.timeEnd,
     data.timeStar,
     data.timeRange,
+    data.eventDrag.event,
   ]);
 
   return [

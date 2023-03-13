@@ -5,6 +5,7 @@
  * @Last Modified time: 2023-03-01 16:09:34
  */
 import dayjs from "dayjs";
+import { IEvent } from "../../interface";
 
 interface IDate {
   /** @param 开始时间 YYYY-MM-DD HH:mm:ss */
@@ -172,4 +173,29 @@ export const checkRangeBeMixed = (
   }
 
   return true;
+};
+
+/** @function 计算在指定的时间区间，一个事件能拖动到的最晚开始时间 */
+export const getEventMaxStartStr = (req: {
+  /** @param 事件信息 */
+  et: IEvent;
+  /** @param 当前时间 */
+  date: Date;
+  /** @param 配置的结束时间 */
+  timeEnd: number;
+  /** @param 想要拖拽到的结束时间 YYYY-MM-DD HH:mm:ss */
+  startTimeStr: string;
+}) => {
+  const { et, date, timeEnd, startTimeStr } = req;
+  const todayEnd = dayjs(date).format(
+    `YYYY-MM-DD ${`${timeEnd}`.padStart(2, "0")}:00:00`
+  );
+  const range =
+    new Date(et.endTimeStr).getTime() - new Date(et.startTimeStr).getTime();
+  const maxStart = new Date(todayEnd).getTime() - range;
+  let startTimeStr_ =
+    new Date(startTimeStr).getTime() <= maxStart
+      ? startTimeStr
+      : dayjs(maxStart).format("YYYY-MM-DD HH:mm:ss");
+  return startTimeStr_;
 };
