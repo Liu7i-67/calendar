@@ -25,10 +25,9 @@ import {
   getSEInfo,
   checkRangeBeMixed,
   getEventMaxStartStr,
+  dragTime,
 } from "components/Calendar/utils";
 import dayjs from "dayjs";
-
-const dragTime = 300;
 
 export const useDayRenderData = () => {
   const data = RootStore.useSelector((r) => r.data);

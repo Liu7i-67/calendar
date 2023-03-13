@@ -47,6 +47,7 @@ const Calendar = function Calendar_({
         dayBgOptionWeb: methods.dayBgOptionWeb,
         dayBgOptionApp: methods.dayBgOptionApp,
         dayEventDrag: methods.dayEventDrag,
+        clearEventDayDrag: methods.clearEventDayDrag,
         nextColItems: methods.nextColItems,
         preColItems: methods.preColItems,
         reducePageSize: methods.reducePageSize,

@@ -45,3 +45,8 @@ export * from "./modules/text";
 export * from "./modules/dateHelper";
 export * from "./modules/event";
 export * from "./modules/range";
+
+/** @param 拖拽事件的触发延时 */
+export const dragTime = 300;
+/** @param 拖动的精度误差，防止用户是手抖点击不是拖拽 */
+export const errorAccuracy = 20;

@@ -55,7 +55,9 @@ const Events = function Events_(props: IBackgroundProps) {
               }}
               onMouseMove={(e) => {
                 cRef.clearTimeDelay(e);
-                // console.log("move:", e);
+              }}
+              onMouseUp={() => {
+                cRef.clearEventDayDrag();
               }}
             >
               {i.title}

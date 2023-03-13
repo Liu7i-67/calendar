@@ -5,7 +5,11 @@
  * @Last Modified time: 2023-02-17 11:50:09
  */
 
-import type { IDayEventDrag, IEventCol } from "components/Calendar/interface";
+import type {
+  IDayEventDrag,
+  IEventCol,
+  IEventDrag,
+} from "components/Calendar/interface";
 import { useMethods } from "@quarkunlimit/react-hooks";
 import {
   IDragEvent,
@@ -13,7 +17,11 @@ import {
   EOptionTypeWeb,
   EOptionTypeApp,
 } from "components/Calendar/interface";
-import { getSEInfo, getEventMaxStartStr } from "components/Calendar/utils";
+import {
+  getSEInfo,
+  getEventMaxStartStr,
+  errorAccuracy,
+} from "components/Calendar/utils";
 import { cloneDeep } from "lodash";
 import dayjs from "dayjs";
 
@@ -202,7 +210,19 @@ export const useDayMethod = (_props: ISubRootProps) => {
         case EOptionTypeWeb.MOUSEMOVE:
           {
             setData((o) => {
-              if (!o.eventDrag.event || !c) {
+              if (
+                !o.eventDrag.event ||
+                !c ||
+                !o.eventDrag.x ||
+                !o.eventDrag.y
+              ) {
+                return;
+              }
+
+              const xDrag = Math.abs(e.clientX - o.eventDrag.x) < errorAccuracy;
+              const yDrag = Math.abs(e.clientY - o.eventDrag.y) < errorAccuracy;
+
+              if (xDrag && yDrag) {
                 return;
               }
               o.eventDrag.target = {
@@ -223,23 +243,6 @@ export const useDayMethod = (_props: ISubRootProps) => {
                 return;
               }
 
-              // 如果结束点位和起始点位一致，且时间间隔在300ms以内视为单击
-              if (
-                data.eventDrag.x === e.clientX &&
-                data.eventDrag.y === e.clientY
-              ) {
-                props.eventClick?.(data.eventDrag.event);
-                return;
-              }
-
-              o.eventDrag.target = {
-                type: e.type as EOptionTypeWeb,
-                x: e?.clientX,
-                y: e?.clientY,
-                col: c,
-                time: Date.now(),
-              };
-
               // 计算一下事件可拖动的最晚开始时间
               const startTimeStr = getEventMaxStartStr({
                 et: data.eventDrag.event,
@@ -253,7 +256,6 @@ export const useDayMethod = (_props: ISubRootProps) => {
                 startTimeStr,
                 event: data.eventDrag.event,
               });
-
               o.eventDrag = {};
             });
           }
@@ -269,10 +271,12 @@ export const useDayMethod = (_props: ISubRootProps) => {
     /** @function 鼠标在事件上滑动时移除300ms的延迟限制 */
     clearTimeDelay: (e: React.MouseEvent<HTMLDivElement>) => {
       setData((o) => {
-        if (!o.eventDrag.event) {
+        if (!o.eventDrag.event || !data.eventDrag?.x || !data.eventDrag?.y) {
           return;
         }
-        if (e.clientX !== data.eventDrag.x || e.clientY !== data.eventDrag.y) {
+        const xDrag = Math.abs(e.clientX - data.eventDrag.x) >= errorAccuracy;
+        const yDrag = Math.abs(e.clientY - data.eventDrag.y) >= errorAccuracy;
+        if (xDrag || yDrag) {
           o.eventDrag.time = 0;
         }
       });

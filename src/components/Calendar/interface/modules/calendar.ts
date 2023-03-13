@@ -53,6 +53,8 @@ export interface ICalendarApi extends ICalendarProps {
   dayBgOptionApp: (c: IEventCol, e: React.TouchEvent<HTMLDivElement>) => void;
   /** @function 日模式web端事件拖拽 */
   dayEventDrag: (req: IDayEventDrag) => void;
+  /** @function 日模式结束拖拽 */
+  clearEventDayDrag: () => void;
   /** @function 鼠标在事件上滑动时移除300ms的延迟限制 */
   clearTimeDelay: (e: React.MouseEvent<HTMLDivElement>) => void;
   /** @function 展示下一页专家信息 */
