@@ -81,6 +81,8 @@ export function useStore(props: ICalendarProps) {
     dayBgOptionApp: dayMethod.dayBgOptionApp,
     /** @function 日模式事件拖拽相关操作-仅web端 */
     dayEventDrag: dayMethod.dayEventDrag,
+    /** @function 日模式清空事件操作 */
+    clearEventDayDrag: dayMethod.clearEventDayDrag,
     setData,
     /** @function 展示下一页专家信息 */
     nextColItems: commonMethod.nextColItems,

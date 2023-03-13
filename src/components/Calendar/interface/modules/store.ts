@@ -56,6 +56,10 @@ export interface IEventDrag {
   time: number;
   /** @param 拖拽的目标事件 */
   event: IEvent;
+  /** @param 拖拽的起始坐标 */
+  x?: number;
+  /** @param 拖拽的起始坐标 */
+  y?: number;
   /** @param 当前的拖拽位置 */
   target: IDragEvent;
 }

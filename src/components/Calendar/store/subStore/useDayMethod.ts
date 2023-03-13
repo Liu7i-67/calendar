@@ -186,6 +186,7 @@ export const useDayMethod = (_props: ISubRootProps) => {
       if (!data.isWeb) {
         return;
       }
+
       const { et, e, c } = param;
       switch (e.type) {
         case EOptionTypeWeb.MOUSEDOWN:
@@ -193,6 +194,8 @@ export const useDayMethod = (_props: ISubRootProps) => {
             setData((o) => {
               o.eventDrag.time = Date.now();
               o.eventDrag.event = JSON.parse(JSON.stringify(et));
+              o.eventDrag.x = e.clientX;
+              o.eventDrag.y = e.clientY;
             });
           }
           break;
@@ -219,6 +222,16 @@ export const useDayMethod = (_props: ISubRootProps) => {
                 o.eventDrag = {};
                 return;
               }
+
+              // 如果结束点位和起始点位一致，且时间间隔在300ms以内视为单击
+              if (
+                data.eventDrag.x === e.clientX &&
+                data.eventDrag.y === e.clientY
+              ) {
+                props.eventClick?.(data.eventDrag.event);
+                return;
+              }
+
               o.eventDrag.target = {
                 type: e.type as EOptionTypeWeb,
                 x: e?.clientX,
@@ -228,7 +241,6 @@ export const useDayMethod = (_props: ISubRootProps) => {
               };
 
               // 计算一下事件可拖动的最晚开始时间
-
               const startTimeStr = getEventMaxStartStr({
                 et: data.eventDrag.event,
                 date: data.date,
@@ -247,6 +259,12 @@ export const useDayMethod = (_props: ISubRootProps) => {
           }
           break;
       }
+    },
+    /** @function 清空事件拖动操作 */
+    clearEventDayDrag: () => {
+      setData((o) => {
+        o.eventDrag = {};
+      });
     },
   });
 

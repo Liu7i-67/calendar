@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import type { ICalendarProps, ICalendarApi } from "./interface";
+import type { ICalendarProps, ICalendarApi, IEvent } from "./interface";
 import { RootStore } from "./store";
 import { useDayRenderData } from "./store/dayHook/useDayRenderData";
 
@@ -25,6 +25,14 @@ const Calendar = function Calendar_({
     <div>
       {children?.({
         ...props,
+        eventClick: (event: IEvent) => {
+          props.eventClick?.(event);
+          methods.clearEventDayDrag();
+        },
+        eventDoubleClick: (event: IEvent) => {
+          props.eventDoubleClick?.(event);
+          methods.clearEventDayDrag();
+        },
         date: data.date,
         views: data.views,
         view: data.view,

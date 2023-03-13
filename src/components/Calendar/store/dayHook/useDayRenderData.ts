@@ -28,6 +28,8 @@ import {
 } from "components/Calendar/utils";
 import dayjs from "dayjs";
 
+const dragTime = 300;
+
 export const useDayRenderData = () => {
   const data = RootStore.useSelector((r) => r.data);
   const props = RootStore.useSelector((r) => r.props);
@@ -122,7 +124,8 @@ export const useDayRenderData = () => {
 
     // 如果有事件拖拽
     const de = data.eventDrag.event;
-    if (de) {
+    const isDrag = Date.now() - (data.eventDrag.time ?? 0) > dragTime;
+    if (de && isDrag) {
       const dragEvent = JSON.parse(JSON.stringify(de));
 
       if (data.eventDrag.target) {
@@ -171,7 +174,7 @@ export const useDayRenderData = () => {
       return {
         range: rangeArr,
         content: [],
-        dragging: data.eventDrag.event ? true : false,
+        dragging: false,
       } as IDayLayerDrag;
     }
 
@@ -518,8 +521,8 @@ export const useDayRenderData = () => {
             : `${(left / Math.min(box.length, maxAppoint)) * 100}%`,
           height: `calc(${(eRangeMin / maxMin) * 100}%)`,
         };
-
-        if (e.id === data.eventDrag.event?.id) {
+        const isDrag = Date.now() - (data.eventDrag.time ?? 0) > dragTime;
+        if (e.id === data.eventDrag.event?.id && isDrag) {
           e.style.opacity = 0.5;
         }
 
@@ -569,7 +572,7 @@ export const useDayRenderData = () => {
     data.timeEnd,
     data.timeStar,
     data.timeRange,
-    data.eventDrag.event,
+    data.eventDrag,
   ]);
 
   return [
