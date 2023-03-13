@@ -113,9 +113,17 @@ const Background = function Background_(props: IBackgroundProps) {
               }}
               onMouseMove={(e) => {
                 cRef.dayBgOptionWeb(i, e);
+                cRef.dayEventDrag({
+                  e,
+                  c: i,
+                });
               }}
               onMouseUp={(e) => {
                 cRef.dayBgOptionWeb(i, e);
+                cRef.dayEventDrag({
+                  e,
+                  c: i,
+                });
               }}
               onTouchStart={(e) => {
                 cRef.dayBgOptionApp(i, e);

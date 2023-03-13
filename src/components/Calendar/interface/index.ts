@@ -34,6 +34,17 @@ export interface ICalendarProps extends Partial<IPropsInit> {
   onViewChange?: (nView: IView) => void;
   /** @function 新增事件 */
   onEventAdd?: (range: IAddRangeInfo) => void;
+  /** @function 事件的拖拽事件 */
+  onEventDrag?: (req: IReqOnEventDrag) => void;
+}
+
+export interface IReqOnEventDrag {
+  /** @param 事件信息 */
+  event: IEvent;
+  /** @param 目标专家id */
+  colId: string;
+  /** @param 目标开始时间 */
+  startTimeStr: string;
 }
 
 export interface IDropDownContent {

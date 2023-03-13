@@ -47,6 +47,16 @@ const Events = function Events_(props: IBackgroundProps) {
               style={i.style}
               onClick={() => click?.(i)}
               onDoubleClick={() => doubleClick?.(i)}
+              onMouseDown={(e) => {
+                // console.log("onMouseDown:", i);
+                cRef.dayEventDrag({
+                  e,
+                  et: i,
+                });
+              }}
+              onMouseUp={(e) => {
+                // console.log("onMouseUp:", i);
+              }}
             >
               {i.title}
             </div>

@@ -47,4 +47,15 @@ export interface IStore extends IPropsInit {
   touchData: IDragEvent[];
   /** @param 移动端是否处于拖拽开关 默认为false */
   appDragFlag: boolean;
+  /** @param 事件拖拽相关信息 */
+  eventDrag: Partial<IEventDrag>;
+}
+
+export interface IEventDrag {
+  /** @param 拖拽开始时间 */
+  time: number;
+  /** @param 拖拽的目标事件 */
+  event: IEvent;
+  /** @param 当前的拖拽位置 */
+  target: IDragEvent;
 }

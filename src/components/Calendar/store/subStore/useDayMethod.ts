@@ -5,7 +5,7 @@
  * @Last Modified time: 2023-02-17 11:50:09
  */
 
-import type { IEventCol } from "components/Calendar/interface";
+import type { IDayEventDrag, IEventCol } from "components/Calendar/interface";
 import { useMethods } from "@quarkunlimit/react-hooks";
 import {
   IDragEvent,
@@ -15,6 +15,7 @@ import {
 } from "components/Calendar/interface";
 import { getSEInfo, DH } from "components/Calendar/utils";
 import { cloneDeep } from "lodash";
+import dayjs from "dayjs";
 
 export const useDayMethod = (_props: ISubRootProps) => {
   const { data, setData, props } = _props;
@@ -176,6 +177,77 @@ export const useDayMethod = (_props: ISubRootProps) => {
           break;
         case EOptionTypeApp.TOUCHEND:
           {
+          }
+          break;
+      }
+    },
+    /** @function 日模式事件拖拽操作 */
+    dayEventDrag(param: IDayEventDrag) {
+      if (!data.isWeb) {
+        return;
+      }
+      const { et, e, c } = param;
+      switch (e.type) {
+        case EOptionTypeWeb.MOUSEDOWN:
+          {
+            setData((o) => {
+              o.eventDrag.time = Date.now();
+              o.eventDrag.event = JSON.parse(JSON.stringify(et));
+            });
+          }
+          break;
+        case EOptionTypeWeb.MOUSEMOVE:
+          {
+            setData((o) => {
+              if (!o.eventDrag.event || !c) {
+                return;
+              }
+              o.eventDrag.target = {
+                type: e.type as EOptionTypeWeb,
+                x: e?.clientX,
+                y: e?.clientY,
+                col: c,
+                time: Date.now(),
+              };
+            });
+          }
+          break;
+        case EOptionTypeWeb.MOUSEUP:
+          {
+            setData((o) => {
+              if (!data.eventDrag.event || !c) {
+                return;
+              }
+              o.eventDrag.target = {
+                type: e.type as EOptionTypeWeb,
+                x: e?.clientX,
+                y: e?.clientY,
+                col: c,
+                time: Date.now(),
+              };
+
+              const todayEnd = dayjs(data.date).format(
+                `YYYY-MM-DD ${`${data.timeEnd}`.padStart(2, "0")}:00:00`
+              );
+
+              // 计算一下事件可拖动的最晚开始事件
+              const range =
+                new Date(data.eventDrag.event.endTimeStr).getTime() -
+                new Date(data.eventDrag.event.startTimeStr).getTime();
+              const maxStart = new Date(todayEnd).getTime() - range;
+              let startTimeStr =
+                new Date(c.startTimeStr).getTime() <= maxStart
+                  ? c.startTimeStr
+                  : dayjs(maxStart).format("YYYY-MM-DD HH:mm:ss");
+
+              props.onEventDrag?.({
+                colId: c.colId,
+                startTimeStr,
+                event: data.eventDrag.event,
+              });
+
+              o.eventDrag = {};
+            });
           }
           break;
       }

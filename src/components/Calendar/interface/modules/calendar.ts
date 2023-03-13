@@ -12,6 +12,7 @@ import type {
   IColItem,
   IEventCol,
   ICalendarProps,
+  IDayEventDrag,
 } from "..";
 
 export interface ICalendarApi extends ICalendarProps {
@@ -50,6 +51,8 @@ export interface ICalendarApi extends ICalendarProps {
   dayBgOptionWeb: (c: IEventCol, e: React.MouseEvent<HTMLDivElement>) => void;
   /** @function 日模式背景app端相关操作 */
   dayBgOptionApp: (c: IEventCol, e: React.TouchEvent<HTMLDivElement>) => void;
+  /** @function 日模式web端事件拖拽 */
+  dayEventDrag: (req: IDayEventDrag) => void;
   /** @function 展示下一页专家信息 */
   nextColItems: () => void;
   /** @function 展示上一页专家信息 */

@@ -143,6 +143,9 @@ function App() {
           eventDoubleClick={(e) => {
             console.log("打开编辑:", e);
           }}
+          onEventDrag={(req) => {
+            console.log("事件拖拽：", req);
+          }}
           maxCellEventNumber={5}
         >
           {(ref) => {

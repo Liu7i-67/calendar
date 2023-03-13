@@ -37,6 +37,7 @@ const initStore: IStore = {
   appDragFlag: false,
   touchData: [],
   isWeb: true,
+  eventDrag: {},
 };
 
 export function useStore(props: ICalendarProps) {
@@ -78,6 +79,8 @@ export function useStore(props: ICalendarProps) {
     dayBgOptionWeb: dayMethod.dayBgOptionWeb,
     /** @function 日模式背景相关操作-app端 */
     dayBgOptionApp: dayMethod.dayBgOptionApp,
+    /** @function 日模式事件拖拽相关操作-仅web端 */
+    dayEventDrag: dayMethod.dayEventDrag,
     setData,
     /** @function 展示下一页专家信息 */
     nextColItems: commonMethod.nextColItems,
