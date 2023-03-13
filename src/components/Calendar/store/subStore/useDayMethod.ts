@@ -266,6 +266,17 @@ export const useDayMethod = (_props: ISubRootProps) => {
         o.eventDrag = {};
       });
     },
+    /** @function 鼠标在事件上滑动时移除300ms的延迟限制 */
+    clearTimeDelay: (e: React.MouseEvent<HTMLDivElement>) => {
+      setData((o) => {
+        if (!o.eventDrag.event) {
+          return;
+        }
+        if (e.clientX !== data.eventDrag.x || e.clientY !== data.eventDrag.y) {
+          o.eventDrag.time = 0;
+        }
+      });
+    },
   });
 
   return _methods;

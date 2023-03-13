@@ -83,6 +83,8 @@ export function useStore(props: ICalendarProps) {
     dayEventDrag: dayMethod.dayEventDrag,
     /** @function 日模式清空事件操作 */
     clearEventDayDrag: dayMethod.clearEventDayDrag,
+    /** @function 鼠标在事件上滑动时移除300ms的延迟限制 */
+    clearTimeDelay: dayMethod.clearTimeDelay,
     setData,
     /** @function 展示下一页专家信息 */
     nextColItems: commonMethod.nextColItems,

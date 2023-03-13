@@ -51,6 +51,7 @@ const Calendar = function Calendar_({
         preColItems: methods.preColItems,
         reducePageSize: methods.reducePageSize,
         addPageSize: methods.addPageSize,
+        clearTimeDelay: methods.clearTimeDelay,
       })}
     </div>
   );

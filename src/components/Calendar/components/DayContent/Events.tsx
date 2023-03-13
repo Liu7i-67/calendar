@@ -53,6 +53,10 @@ const Events = function Events_(props: IBackgroundProps) {
                   et: i,
                 });
               }}
+              onMouseMove={(e) => {
+                cRef.clearTimeDelay(e);
+                // console.log("move:", e);
+              }}
             >
               {i.title}
             </div>
